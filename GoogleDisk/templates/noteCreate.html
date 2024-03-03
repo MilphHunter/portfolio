@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/offcanvas.css">
+    <link rel="stylesheet" href="css/dropdowns.css">
+    <script src="js/main.js" defer></script>
+    <script src="js/open_windows.js" defer></script>
+    <script src="js/text-manipulations.js" defer></script>
+    <script src="js/musicPlayer.js" defer></script>
+    <script src="js/bootstrap.bundle.min.js" defer></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <title>Заметки</title>
+</head>
+
+<body class="bg-light">
+    <!-- Navigation bar -->
+    <nav class="nav-padding navbar navbar-expand-lg fixed-top navbar-dark bg-dark" aria-label="Main navigation">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#" id="toggle-sidebar">
+                <img src="img/icon/note.png" class="icon">
+                Мій нотатник</a>
+            <button class="navbar-toggler p-0 border-0" type="button" id="navbarSideCollapse"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="navbar-collapse offcanvas-collapse" id="navbarsExampleDefault">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a href="index.html" class="nav-link active" aria-current="page">Головна</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="createPassBtn">Сейф</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="korzina.html" class="nav-link">Корзина</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown"
+                            aria-expanded="false">Додати</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" id="createTagBtn1" href="#">Тег</a></li>
+                            <li><a class="dropdown-item" id="createFolderBtn1" href="#">Папку</a></li>
+                            <li><a class="dropdown-item" href="#">Запис</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <form class="d-flex" role="search">
+                    <input class="form-control me-2" type="search" placeholder="Знайти..." aria-label="Search">
+                    <button class="btn btn-outline-warning" type="submit">Пошук</button>
+                </form>
+            </div>
+        </div>
+    </nav>
+    <!-- Tag bar -->
+    <div id="tag-section" class="nav-scroller bg-body shadow-sm">
+        <nav class="nav nav-tag" aria-label="Secondary navigation">
+            <a class="nav-link active nav-tag-but nav-button" aria-current="tags">Теги:</a>
+            <a class="nav-button nav-link" href="#" onclick="toggleColor(this)">
+                Друзі
+                <span class="nav-button badge text-bg-light rounded-pill align-text-bottom">27</span>
+            </a>
+            <a class="nav-link nav-button" href="#" onclick="toggleColor(this)">
+                Дослідження
+                <span class="nav-button badge text-bg-light rounded-pill align-text-bottom">12</span>
+            </a>
+            <a class="nav-link nav-button" href="#" onclick="toggleColor(this)">
+                Пропозиції
+                <span class="nav-button badge text-bg-light rounded-pill align-text-bottom">18</span>
+            </a>
+            <a class="nav-link nav-button" href="#" onclick="toggleColor(this)">
+                Тег
+                <span class="nav-button badge text-bg-light rounded-pill align-text-bottom">1</span>
+            </a>
+            <a class="nav-link nav-button" href="#" onclick="toggleColor(this)">
+                Тег
+                <span class="nav-button badge text-bg-light rounded-pill align-text-bottom">1</span>
+            </a>
+            <a class="nav-link nav-button" href="#" onclick="toggleColor(this)">
+                Тег
+                <span class="nav-button badge text-bg-light rounded-pill align-text-bottom">1</span>
+            </a>
+            <a class="nav-link nav-button" href="#" onclick="toggleColor(this)">
+                Тег
+                <span class="nav-button badge text-bg-light rounded-pill align-text-bottom">1</span>
+            </a>
+            <a class="nav-link nav-button" href="#" onclick="toggleColor(this)">
+                Тег
+                <span class="nav-button badge text-bg-light rounded-pill align-text-bottom">1</span>
+            </a>
+        </nav>
+    </div>
+    <!-- Sidebar -->
+    <div class="d-flex flex-column flex-shrink-0 p-3 text-bg-dark sidebar" style="width: 280px;">
+        <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+            <svg class="bi pe-none me-2" width="40" height="32">
+                <use xlink:href="#bootstrap" />
+            </svg>
+            <span class="fs-4">Sidebar</span>
+        </a>
+        <hr>
+        <ul class="nav nav-pills flex-column mb-auto">
+            <li class="nav-item">
+                <a href="" class="nav-link active" aria-current="page" id="scrollToTopBtn">
+                    <img src="img/icon/tag.png" class="sidebar__img me-2">
+                    <span class="sidebar__tagName">Теги</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="index.html#folder-section" class="nav-link text-white">
+                    <img src="img/icon/folder.png" class="sidebar__img me-2">
+                    <span class="sidebar__tagName">Папки</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="index.html#notes-section" class="nav-link text-white">
+                    <img src="img/icon/documents.png" class="sidebar__img me-2">
+                    <span class="sidebar__tagName">Записи</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#footer-section" class="nav-link text-white">
+                    <img src="img/icon/callback.png" class="sidebar__img me-2">
+                    <span class="sidebar__tagName">Зв'язок зі мною</span>
+                </a>
+            </li>
+
+
+            <li class="add-butns nav-item">
+                <a id="createTagBtn" href="#" class="nav-link text-white">
+                    <img src="img/icon/add-white.png" class="sidebar__img me-2">
+                    <span class="sidebar__tagName">Створити тег →</span>
+                </a>
+            </li>
+            <li id="createFolderBtn" class="nav-item">
+                <a href="#" class="nav-link text-white">
+                    <img src="img/icon/add-white.png" class="sidebar__img me-2">
+                    <span class="sidebar__tagName">Створити папку →</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="noteCreate.html" class="nav-link text-white">
+                    <img src="img/icon/add-white.png" class="sidebar__img me-2">
+                    <span class="sidebar__tagName">Створити запис →</span>
+                </a>
+            </li>
+        </ul>
+        <hr>
+        <div class="dropdown">
+            <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
+                data-bs-toggle="dropdown" aria-expanded="false">
+                <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
+                <strong>Username</strong>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
+                <li><a class="dropdown-item" href="noteCreate.html">Створити запис</a></li>
+                <li><a class="dropdown-item" href="#">Забув код</a></li>
+                <li>
+                    <hr class="dropdown-divider">
+                </li>
+                <li><a class="dropdown-item" href="#">Вийти</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <main class="container">
+            <div class="my-3 p-3 bg-body rounded shadow-sm">
+                <h6 class="border-bottom pb-2 mb-0">Введіть назву(тему) замітки та/або оберіть її папку:</h6>
+                <div class="d-flex text-muted pt-3 element" onmouseover="showEditBtn(this)" onmouseout="hideEditBtn(this)">
+                    <div class="image-container">
+                        <a class="nav-link" href="#">
+                            <img src="img/icon/pallete.png" class="note-icon">
+                        </a>
+                    </div>
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" placeholder="Мої думки" aria-label="Username">
+                        <button type="button" class="btn btn-danger zi-0">Палітра емоцій</button>
+                        <button type="button" class="btn btn-danger dropdown-toggle dropdown-toggle-split zi-0" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            <span class="visually-hidden">Toggle Dropdown</span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">Творчіть</a></li>
+                            <li><a class="dropdown-item" href="#">Гроші</a></li>
+                            <li><a class="dropdown-item" href="#">Програмування</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" href="#">Без папки</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="my-3 p-3 bg-body rounded shadow-sm">
+                <h6 class="border-bottom pb-2 mb-0">Введіть текст:</h6>
+                <div class=" text-muted " onmouseover="showEditBtn(this)" onmouseout="hideEditBtn(this)">
+                    <div class="form-floating text_area">
+                        <textarea class="form-control text_area__main" placeholder="Leave a comment here" id="autoresizingTextarea" style="height: 100px"
+                            oninput="autoresize()"></textarea>
+                        <label for="autoresizingTextarea">Текст нотатки:</label>
+                        <div class="input-group flex-nowrap">
+                            <div class="input-group d-flex justify-content-start mt-3">
+                                <button type="button" class="btn btn-danger zi-0"><span style="font-size: 20px;">+</span> Створити нотатку</button>
+                            </div>
+                            <div class="input-group flex-nowrap text_area__buttons d-flex justify-content-end mt-3">
+                                <p>Розмір тексту: </p>
+                                <div class="dropdown text_area__buttons__dropdown">
+                                    <!-- Resizing text text-area -->
+                                    <a class="btn btn-default dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        1.0
+                                    </a>
+                                    <ul class="dropdown-menu dropdown-item__element text_area__buttons__font_size">
+                                        <li>
+                                            <ul class="list-group list-group-horizontal">
+                                                <li><a class="dropdown-item" href="#" onclick="changeFontSize(this, 0.4)">0.4</a></li>
+                                                <li><a class="dropdown-item active" href="#" onclick="changeFontSize(this, 1)">1.0</a></li>
+                                                <li><a class="dropdown-item" href="#" onclick="changeFontSize(this, 1.6)">1.6</a></li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <ul class="list-group list-group-horizontal-sm">
+                                                <li><a class="dropdown-item" href="#" onclick="changeFontSize(this, 0.6)">0.6</a></li>
+                                                <li><a class="dropdown-item" href="#" onclick="changeFontSize(this, 1.2)">1.2</a></li>
+                                                <li><a class="dropdown-item" href="#" onclick="changeFontSize(this, 1.8)">1.8</a></li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <ul class="list-group list-group-horizontal-md">
+                                                <li><a class="dropdown-item" href="#" onclick="changeFontSize(this, 0.8)">0.8</a></li>
+                                                <li><a class="dropdown-item" href="#" onclick="changeFontSize(this, 1.4)">1.4</a></li>
+                                                <li><a class="dropdown-item" href="#" onclick="changeFontSize(this, 2)">2.0</a></li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="my-3 p-3 bg-body rounded shadow-sm">
+                <h6 class="border-bottom pb-2 mb-0">Прикріпити файли:</h6>
+                <div class="mt-3 border-bottom pb-2">
+                    <input class="form-control" type="file" id="formFile">
+                </div>
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="image-tab" data-bs-toggle="tab" data-bs-target="#image-tab-pane" type="button"
+                            role="tab" aria-controls="image-tab-pane" aria-selected="true">Зображення</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="video-tab" data-bs-toggle="tab" data-bs-target="#video-tab-pane" type="button"
+                            role="tab" aria-controls="video-tab-pane" aria-selected="false">Відео</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="audio-tab" data-bs-toggle="tab" data-bs-target="#audio-tab-pane" type="button"
+                            role="tab" aria-controls="audio-tab-pane" aria-selected="false">Аудіо</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="files-tab" data-bs-toggle="tab" data-bs-target="#files-tab-pane"
+                            type="button" role="tab" aria-controls="files-tab-pane" aria-selected="false">Файли</button>
+                    </li>
+                </ul>
+                <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade show active" id="image-tab-pane" role="tabpanel" aria-labelledby="image-tab" tabindex="0">                        
+                        <div class="d-flex flex-wrap">
+                            <div class="position-relative">
+                                <img class="rounded imageContent ms-2 mt-3 mb-1 clickable" src="/img/test-img.jpg" alt="Card image">
+                                <button type="button" class="btn-close position-absolute close_img_btn" aria-label="Close"></button>
+                            </div>
+                            <div class="position-relative">
+                                <img class="rounded imageContent ms-2 mt-3 mb-1 clickable" src="/img/test-img.jpg" alt="Card image">
+                                <button type="button" class="btn-close position-absolute close_img_btn" aria-label="Close"></button>
+                            </div>
+                            <div class="position-relative">
+                                <img class="rounded imageContent ms-2 mt-3 mb-1 clickable" src="/img/test-img.jpg" alt="Card image">
+                                <button type="button" class="btn-close position-absolute close_img_btn" aria-label="Close"></button>
+                            </div>
+                            <div class="position-relative">
+                                <img class="rounded imageContent ms-2 mt-3 mb-1 clickable" src="/img/test-img.jpg" alt="Card image">
+                                <button type="button" class="btn-close position-absolute close_img_btn" aria-label="Close"></button>
+                            </div>
+                            <div class="position-relative">
+                                <img class="rounded imageContent ms-2 mt-3 mb-1 clickable" src="/img/test-img.jpg" alt="Card image">
+                                <button type="button" class="btn-close position-absolute close_img_btn" aria-label="Close"></button>
+                            </div>
+                            <div class="position-relative">
+                                <img class="rounded imageContent ms-2 mt-3 mb-1 clickable" src="/img/test-img.jpg" alt="Card image">
+                                <button type="button" class="btn-close position-absolute close_img_btn" aria-label="Close"></button>
+                            </div>
+                            <div class="position-relative">
+                                <img class="rounded imageContent ms-2 mt-3 mb-1 clickable" src="/img/test-img.jpg" alt="Card image">
+                                <button type="button" class="btn-close position-absolute close_img_btn" aria-label="Close"></button>
+                            </div>
+                            <div class="position-relative">
+                                <img class="rounded imageContent ms-2 mt-3 mb-1 clickable" src="/img/test-img.jpg" alt="Card image">
+                                <button type="button" class="btn-close position-absolute close_img_btn" aria-label="Close"></button>
+                            </div>
+                            <div class="position-relative">
+                                <img class="rounded imageContent ms-2 mt-3 mb-1 clickable" src="/img/test-img.jpg" alt="Card image">
+                                <button type="button" class="btn-close position-absolute close_img_btn" aria-label="Close"></button>
+                            </div>
+                            <div class="position-relative">
+                                <img class="rounded imageContent ms-2 mt-3 mb-1 clickable" src="/img/test-img.jpg" alt="Card image">
+                                <button type="button" class="btn-close position-absolute close_img_btn" aria-label="Close"></button>
+                            </div>
+                            <div class="position-relative">
+                                <img class="rounded imageContent ms-2 mt-3 mb-1 clickable" src="/img/icon/pallete.png" alt="Card image">
+                                <button type="button" class="btn-close position-absolute close_img_btn" aria-label="Close"></button>
+                            </div>
+                            <div class="position-relative">
+                                <img class="rounded imageContent ms-2 mt-3 mb-1 clickable" src="/img/test-img.jpg" alt="Card image">
+                                <button type="button" class="btn-close position-absolute close_img_btn" aria-label="Close"></button>
+                            </div>
+                            <div class="position-relative">
+                                <img class="rounded imageContent ms-2 mt-3 mb-1 clickable" src="/img/test-img.jpg" alt="Card image">
+                                <button type="button" class="btn-close position-absolute close_img_btn" aria-label="Close"></button>
+                            </div>
+
+                            <div id="overlay" class="overlay"></div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="video-tab-pane" role="tabpanel" aria-labelledby="video-tab" tabindex="0">
+                        <div class="d-flex flex-wrap">
+                            <div class="ms-2 custom-video-player position-relative">
+                                <video class="videoContent" controls>
+                                    <source src="video/test-video2.mp4" type="video/mp4">
+                                </video>
+                                <div class="custom-controls">
+                                    <button type="button" class="btn-close position-absolute close_vid_btn" aria-label="Close"></button>
+                                </div>
+                            </div>
+                            <div class="ms-2 custom-video-player position-relative">
+                                <video class="videoContent" controls>
+                                    <source src="video/test-video2.mp4" type="video/mp4">
+                                </video>
+                                <div class="custom-controls">
+                                    <button type="button" class="btn-close position-absolute close_vid_btn" aria-label="Close"></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="audio-tab-pane" role="tabpanel" aria-labelledby="audio-tab" tabindex="0">
+                        <div class="mt-3 d-flex flex-wrap">
+                            <div class="mobile-box me-2 position-relative">
+                                <div class="card">
+                                    <div class="bg-image hover-overlay ripple" data-mdb-ripple-color="light">
+                                        <img class="card-img-top" src="https://mdbootstrap.com/wp-content/uploads/2019/02/flam.jpg"
+                                            alt="Card image cap">
+                                        <a href="#!">
+                                            <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
+                                        </a>
+                                    </div>
+                                    <div class="custom-controls">
+                                        <button type="button" class="btn-close position-absolute close_aud_btn" aria-label="Close"></button>
+                                    </div>
+                                    <div class="card-body text-center">
+                            
+                                        <h5 class="h5 font-weight-bold">Dj Flam</h5>
+                                        <p class="mb-0">Urban Bachata remix</p>
+                                        <audio class="music" preload="auto">
+                                            <source src="audio/spotifydown.com - Relatively Permanent.mp3" type="audio/mp3">
+                                            Your browser does not support the audio element.
+                                        </audio>
+                                        <div class="audioplayer">
+                                            <a onclick="togglePlayPause(this)" class="audioplayer">
+                                                <img src="img/icon/play-button.png" class="pButton fas fa-play">
+                                            </a>
+                                            <div class="timeline" onclick="updateTime(this)">
+                                                <div class="playhead" onclick="updateTime(this)"></div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mobile-box me-2 position-relative">
+                                <div class="card">
+                                    <div class="bg-image hover-overlay ripple" data-mdb-ripple-color="light">
+                                        <img class="card-img-top" src="https://mdbootstrap.com/wp-content/uploads/2019/02/flam.jpg"
+                                            alt="Card image cap">
+                                        <a href="#!">
+                                            <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
+                                        </a>
+                                    </div>
+                                    <div class="custom-controls">
+                                        <button type="button" class="btn-close position-absolute close_aud_btn" aria-label="Close"></button>
+                                    </div>
+                                    <div class="card-body text-center">
+                            
+                                        <h5 class="h5 font-weight-bold">Dj Flam</h5>
+                                        <p class="mb-0">Urban Bachata remix</p>
+                                        <audio class="music" preload="auto">
+                                            <source src="audio/spotifydown.com - Relatively Permanent.mp3" type="audio/mp3">
+                                            Your browser does not support the audio element.
+                                        </audio>
+                                        <div class="audioplayer">
+                                            <a onclick="togglePlayPause(this)" class="audioplayer">
+                                                <img src="img/icon/play-button.png" class="pButton fas fa-play">
+                                            </a>
+                                            <div class="timeline" onclick="updateTime(this)">
+                                                <div class="playhead"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mobile-box me-2 position-relative">
+                                <div class="card">
+                                    <div class="bg-image hover-overlay ripple" data-mdb-ripple-color="light">
+                                        <img class="card-img-top" src="https://mdbootstrap.com/wp-content/uploads/2019/02/flam.jpg"
+                                            alt="Card image cap">
+                                        <a href="#!">
+                                            <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
+                                        </a>
+                                    </div>
+                                    <div class="custom-controls">
+                                        <button type="button" class="btn-close position-absolute close_aud_btn" aria-label="Close"></button>
+                                    </div>
+                                    <div class="card-body text-center">
+                            
+                                        <h5 class="h5 font-weight-bold">Dj Flam</h5>
+                                        <p class="mb-0">Urban Bachata remix</p>
+                                        <audio class="music" preload="auto">
+                                            <source src="audio/spotifydown.com - Relatively Permanent.mp3" type="audio/mp3">
+                                            Your browser does not support the audio element.
+                                        </audio>
+                                        <div class="audioplayer">
+                                            <a onclick="togglePlayPause(this)" class="audioplayer">
+                                                <img src="img/icon/play-button.png" class="pButton fas fa-play">
+                                            </a>
+                                            <div class="timeline" onclick="updateTime(this)">
+                                                <div class="playhead"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="files-tab-pane" role="tabpanel" aria-labelledby="files-tab" tabindex="0">
+                        <div class="d-flex flex-wrap">
+                            <div class="card shadow-sm mt-3 mb-1 ms-3 file_card">
+                                <img src="img/icon/file.png" class="border-bottom">
+                                <div class="card-body">
+                                    <div class="custom-controls">
+                                        <button type="button" class="btn-close position-absolute close_file_btn" aria-label="Close"></button>
+                                    </div>
+                                    <p class="card-text">myfile.pdf</p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-sm btn-outline-secondary">Download</button>
+                                        </div>
+                                        <small class="text-muted">30mb</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card shadow-sm mt-3 mb-1 ms-3 file_card">
+                                <img src="img/icon/file.png" class="border-bottom">
+                                <div class="card-body">
+                                    <div class="custom-controls">
+                                        <button type="button" class="btn-close position-absolute close_file_btn" aria-label="Close"></button>
+                                    </div>
+                                    <p class="card-text">myfile.pdf</p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-sm btn-outline-secondary">Download</button>
+                                        </div>
+                                        <small class="text-muted">30mb</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card shadow-sm mt-3 mb-1 ms-3 file_card">
+                                <img src="img/icon/file.png" class="border-bottom">
+                                <div class="card-body">
+                                    <div class="custom-controls">
+                                        <button type="button" class="btn-close position-absolute close_file_btn" aria-label="Close"></button>
+                                    </div>
+                                    <p class="card-text">myfile.pdf</p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-sm btn-outline-secondary">Download</button>
+                                        </div>
+                                        <small class="text-muted">30mb</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card shadow-sm mt-3 mb-1 ms-3 file_card">
+                                <img src="img/icon/file.png" class="border-bottom">
+                                <div class="card-body">
+                                    <div class="custom-controls">
+                                        <button type="button" class="btn-close position-absolute close_file_btn" aria-label="Close"></button>
+                                    </div>
+                                    <p class="card-text">myfile.pdf</p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-sm btn-outline-secondary">Download</button>
+                                        </div>
+                                        <small class="text-muted">30mb</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Audio -->                    
+                    
+        </div>
+                <!-- Audio -->
+    </main>
+
+    <!-- Tag addition window -->
+    <div id="tagForm" class="addTag__container px-5 my-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card border-0 rounded-3 shadow-lg">
+                    <div class="card-body pt-4 pr-4 pl-4 pb-2">
+                        <div class="text-center addTag__text">
+                            <div class="h1 fw-light">Додати тег</div>
+                        </div>
+                        <form>
+                            <!-- Tag-Name Input -->
+                            <div class="form-floating mb-3">
+                                <input class="form-control" id="tag_create" type="text" placeholder="Name"
+                                    oninput="addHashSymbol()" onfocus="handleFocus()" data-sb-validations="required" />
+                                <label for="name">Назва тегу:</label>
+                                <div class="invalid-feedback" data-sb-feedback="name:required">Name is required.</div>
+                            </div>
+                            <!-- Submit button -->
+                            <div class="d-grid">
+                                <a href="../userMainWorkspace/templates/workspaces/workspace/all_notes.html" class="btn btn-primary btn-lg">Додати</a>
+                            </div>
+                            <p class="d-flex flex-row-reverse text-black-50 pt-2 creating_text_size">Щоб закрити вікно:
+                                Esc</p>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Folder addition window -->
+    <div id="folderForm" class="addTag__container px-5 my-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card border-0 rounded-3 shadow-lg">
+                    <div class="card-body pt-4 pr-4 pl-4 pb-2">
+                        <div class="text-center addTag__text">
+                            <div class="h1 fw-light">Створити папку</div>
+                        </div>
+                        <form>
+                            <div class="mb-3">
+                                <div class="d-flex justify-content-center mb-4">
+                                    <img id="selectedAvatar" src="img/icon/folder-black.png" class="rounded-circle"
+                                        style="width: 200px; height: 200px; object-fit: cover;"
+                                        alt="example placeholder" />
+                                </div>
+                                <div class="d-flex justify-content-center">
+                                    <div class="btn btn-primary btn-rounded">
+                                        <label class="form-label text-white m-1" for="customFile2">Вибрати
+                                            зображення</label>
+                                        <input type="file" class="form-control d-none" id="customFile2"
+                                            onchange="displaySelectedImage(event, 'selectedAvatar')" />
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Name Input -->
+                            <div class="form-floating mb-3">
+                                <input class="form-control" id="folder-create" type="text" placeholder="Name"
+                                    oninput="addHashSymbol()" onfocus="handleFocus()" data-sb-validations="required" />
+                                <label for="name">Назва папки:</label>
+                                <div class="invalid-feedback" data-sb-feedback="name:required">Name is required.</div>
+                            </div>
+                            <!-- Submit button -->
+                            <div class="d-grid">
+                                <a href="../userMainWorkspace/templates/workspaces/workspace/all_notes.html" class="btn btn-primary btn-lg">Створити</a>
+                            </div>
+                            <p class="d-flex flex-row-reverse text-black-50 pt-2 creating_text_size">Щоб закрити вікно:
+                                Esc</p>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Entering the archive password -->
+    <div id="passForm" class="addTag__container px-5 my-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card border-0 rounded-3 shadow-lg">
+                    <div class="card-body pt-4 pr-4 pl-4 pb-2">
+                        <div class="text-center addTag__text">
+                            <div class="h1 fw-light">Це ви?</div>
+                        </div>
+                        <form>
+                            <!-- Tag-Name Input -->
+                            <div class="input-group mb-3">
+                                <span class="input-group-text passEnter">Пароль:</span>
+                                <input type="text" aria-label="First number" class="form-control passEnter__input"
+                                    maxlength="1" oninput="moveToNextInput(this, event)">
+                                <input type="text" aria-label="Second number" class="form-control passEnter__input"
+                                    maxlength="1" oninput="moveToNextInput(this, event)">
+                                <input type="text" aria-label="Third number" class="form-control passEnter__input"
+                                    maxlength="1" oninput="moveToNextInput(this, event)">
+                                <input type="text" aria-label="Fourth number" class="form-control passEnter__input"
+                                    maxlength="1" oninput="moveToNextInput(this, event)">
+                            </div>
+                            <!-- Submit button -->
+                            <div class="d-grid">
+                                <a href="../userMainWorkspace/templates/workspaces/workspace/all_notes.html" class="btn btn-primary btn-lg">Увійти</a>
+                            </div>
+                            <div class="flex-container1">
+                                <a id="forgotPasswordBtn" class="d-flex flex-row pt-2 creating_text_size creating_forgot_btn">Забув пароль</a>
+                                <p class="d-flex flex-row-reverse text-black-50 pt-2 creating_text_size">Щоб закрити вікно: Esc</p>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+<footer id="footer-section">
+    <div class="container">
+        <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
+            <div class="col-md-4 d-flex align-items-center">
+                <a href="/" class="mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1">
+                    <img class="footer-icon" src="img/icon/note-black.png">
+                </a>
+                <span class="mb-3 mb-md-0 text-muted">&copy; 2023 MyPythonProject, Inc</span>
+            </div>
+
+            <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
+                <li><a href="#"><img src="img/icon/telegram.png" class="composition__img">
+                    </a></li>
+                <li><a href="#"><img src="img/icon/gmail.png" class="composition__img">
+                    </a></li>
+                <li><a href="#"><img src="img/icon/instagram.png" class="composition__img composition__img_instagram">
+                    </a></li>
+            </ul>
+        </footer>
+    </div>
+</footer>
+
+</html>

@@ -1,0 +1,308 @@
+{% load static %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>{{ title }}</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="stylesheet" href="{% static 'vendor/css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'vendor/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'vendor/css/offcanvas.css' %}">
+    <link rel="stylesheet" href="{% static 'vendor/css/dropdowns.css' %}">
+    <script src="{% static 'vendor/js/main.js' %}" defer></script>
+    <script src="{% static 'vendor/js/open_windows.js' %}" defer></script>
+    <script src="{% static 'vendor/js/bootstrap.bundle.min.js' %}" defer></script>
+    <script src="{% static 'vendor/js/jquery-3.3.1.min.js' %}"></script>
+</head>
+
+<body class="bg-light">
+<!-- Navigation bar -->
+<nav class="nav-padding navbar navbar-expand-lg fixed-top navbar-dark bg-dark" aria-label="Main navigation">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#" id="toggle-sidebar">
+            <img src="{% static 'vendor/img/icon/note.png' %}" class="icon" alt="icon">
+            Мій нотатник</a>
+        <button class="navbar-toggler p-0 border-0" type="button" id="navbarSideCollapse"
+                aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="navbar-collapse offcanvas-collapse" id="navbarsExampleDefault">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a href="{% url 'workspace:index' %}" class="nav-link active" aria-current="page">Головна</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="createPassBtn">Сейф</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown"
+                       aria-expanded="false">Додати</a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" id="createTagBtn1" href="#">Тег</a></li>
+                        <li><a class="dropdown-item" id="createFolderBtn1" href="#">Папку</a></li>
+                        <li><a class="dropdown-item" href="#">Запис</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <form class="d-flex" method="get" action="{% url 'workspace:findNotes' %}">
+                {% csrf_token %}
+                {{ search_form.query }}
+                <button class="btn btn-outline-warning" type="submit">Пошук</button>
+            </form>
+        </div>
+    </div>
+</nav>
+{% block tagBar %}
+
+{% endblock %}
+<!-- Sidebar -->
+<div class="d-flex flex-column flex-shrink-0 p-3 text-bg-dark sidebar" style="width: 280px;">
+    <a href="/static" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+        <span class="fs-4">Sidebar</span>
+    </a>
+    <hr>
+    <ul class="nav nav-pills flex-column mb-auto">
+        <li class="nav-item">
+            <a href="" class="nav-link active" aria-current="page" id="scrollToTopBtn">
+                <img src="{% static 'vendor/img/icon/tag.png' %}" class="sidebar__img me-2" alt="tag-icon">
+                <span class="sidebar__tagName">Теги</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="{% url 'workspace:allFolders' %}" class="nav-link text-white">
+                <img src="{% static 'vendor/img/icon/folder.png' %}" class="sidebar__img me-2" alt="folder-icon">
+                <span class="sidebar__tagName">Папки</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="{% url 'workspace:allNotes' %}" class="nav-link text-white">
+                <img src="{% static 'vendor/img/icon/documents.png' %}" class="sidebar__img me-2" alt="documents-icon">
+                <span class="sidebar__tagName">Записи</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="#footer-section" class="nav-link text-white">
+                <img src="{% static 'vendor/img/icon/callback.png' %}" class="sidebar__img me-2" alt="callback-icon">
+                <span class="sidebar__tagName">Зв'язок зі мною</span>
+            </a>
+        </li>
+
+        <li class="add-butns nav-item">
+            <a id="createTagBtn" href="{% url 'workspace:index' %}" class="nav-link text-white">
+                <img src="{% static 'vendor/img/icon/add-white.png' %}"
+                     class="sidebar__img me-2" alt="add-icon">
+                <span class="sidebar__tagName">Створити тег →</span>
+            </a>
+        </li>
+        <li id="createFolderBtn" class="nav-item">
+            <a href="#" class="nav-link text-white">
+                <img src="{% static 'vendor/img/icon/add-white.png' %}" class="sidebar__img me-2" alt="add-icon">
+                <span class="sidebar__tagName">Створити папку →</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <form method="post" action="{% url 'workspace:index' %}">
+                {% csrf_token %}
+                <button type="submit" class="nav-link text-white" name="clear_template_data">
+                    <img src="{% static 'vendor/img/icon/add-white.png' %}" class="sidebar__img me-2" alt="add-icon">
+                    <span class="sidebar__tagName">Створити запис →</span></button>
+            </form>
+        </li>
+    </ul>
+    <hr>
+    <div class="dropdown">
+        <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
+           data-bs-toggle="dropdown" aria-expanded="false">
+            <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
+            <strong>Username</strong>
+        </a>
+        <form method="post" action="{% url 'account:logout' %}">
+            {% csrf_token %}
+            <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
+                <li><a class="dropdown-item" href="../../../myzametka/templates/noteCreate.html">Створити запис</a></li>
+                <li>
+                    <hr class="dropdown-divider">
+                </li>
+                <li>
+                    <button class="dropdown-item" type="submit">Выход</button>
+                </li>
+            </ul>
+        </form>
+    </div>
+</div>
+
+<main class="container">
+    {% block content %}
+
+    {% endblock %}
+</main>
+
+<!-- Tag addition window -->
+<div id="tagForm" class="addTag__container px-5 my-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card border-0 rounded-3 shadow-lg">
+                <div class="card-body pt-4 pr-4 pl-4 pb-2">
+                    <div class="text-center addTag__text">
+                        <div class="h1 fw-light">Додати тег</div>
+                    </div>
+                    <form action="{% url 'workspace:index' %}" method="post">
+                        {% csrf_token %}
+                        <!-- Tag-Name Input -->
+                        <div class="form-floating mb-3">
+                            {{ form_tag.tag_name }}
+                            <label for="{{ form_tag.tag_name.id_for_label }}">Назва тегу:</label>
+                            <div class="invalid-feedback" data-sb-feedback="{{ form_tag.tag_name.name }}:required">Name
+                                is
+                                required.
+                            </div>
+                        </div>
+                        <!-- Submit button -->
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary btn-lg">Додати</button>
+                        </div>
+                        <p class="d-flex flex-row-reverse text-black-50 pt-2 creating_text_size">Щоб закрити вікно:
+                            Esc</p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Folder addition window -->
+<div id="folderForm" class="addTag__container px-5 my-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card border-0 rounded-3 shadow-lg">
+                <div class="card-body pt-4 pr-4 pl-4 pb-2">
+                    <div class="text-center addTag__text">
+                        <div class="h1 fw-light">Додати папку</div>
+                    </div>
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <div class="d-flex justify-content-center mb-4">
+                                <img id="selectedImage"
+                                     src="{% if form_folder.folder_img.value %}{{ form_folder.folder_img.value }}
+                    {% else %}{% static 'vendor/img/folder-black.png' %}{% endif %}"
+                                     alt="Selected Image"
+                                     style="max-width: 200px; max-height: 200px; object-fit: contain;">
+                            </div>
+                            <div class="d-flex justify-content-center">
+                                <div class="btn btn-primary btn-rounded">
+                                    <label class="form-label text-white m-1"
+                                           for="{{ form_folder.folder_img.id_for_label }}">Вибрати
+                                        зображення</label>
+                                    {{ form_folder.folder_img }}
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Name Input -->
+                        <div class="form-floating mb-3">
+                            {{ form_folder.folder_name }}
+                            <label for="{{ form_folder.folder_name.id_for_label }}">Назва папки:</label>
+                            <div class="invalid-feedback" data-sb-feedback="name:required">Name is required.</div>
+                        </div>
+                        <div class="form-floating mb-3">
+                            {{ form_folder.folder_description }}
+                            <label for="{{ form_folder.folder_description.id_for_label }}">Опис папки:</label>
+                        </div>
+                        <!-- Submit button -->
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary btn-lg">Додати</button>
+                        </div>
+                        <p class="d-flex flex-row-reverse text-black-50 pt-2 creating_text_size">Щоб закрити вікно:
+                            Esc</p>
+                    </form>
+                    <script>
+                        function displaySelectedImage(event, imgId) {
+                            var input = event.target;
+                            var img = document.getElementById(imgId);
+
+                            if (input.files && input.files[0]) {
+                                var reader = new FileReader();
+
+                                reader.onload = function (e) {
+                                    img.src = e.target.result;
+                                };
+
+                                reader.readAsDataURL(input.files[0]);
+                            } else {
+                                img.src = "{% static 'vendor/img/folder-black.png' %}";
+                            }
+                        }
+                    </script>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Entering the archive password -->
+<div id="passForm" class="addTag__container px-5 my-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card border-0 rounded-3 shadow-lg">
+                <div class="card-body pt-4 pr-4 pl-4 pb-2">
+                    <div class="text-center addTag__text">
+                        <div class="h1 fw-light">Це ви?</div>
+                    </div>
+                    <form method="post" action="{% url 'workspace:checkPass' %}">
+                        {% csrf_token %}
+                        <!-- Tag-Name Input -->
+                        <div class="input-group mb-3">
+                            <span class="input-group-text passEnter">Пароль:</span>
+                            {{ password_input.first_symbol }}
+                            {{ password_input.second_symbol }}
+                            {{ password_input.third_symbol }}
+                            {{ password_input.fourth_symbol }}
+                        </div>
+                        <!-- Submit button -->
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary btn-lg">Увійти</button>
+                        </div>
+                        <div class="flex-container1">
+                            <a id="forgotPasswordBtn"
+                               class="d-flex flex-row pt-2 creating_text_size creating_forgot_btn">Забув пароль</a>
+                            <p class="d-flex flex-row-reverse text-black-50 pt-2 creating_text_size">Щоб закрити вікно:
+                                Esc</p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+<footer id="footer-section">
+    <div class="container">
+        <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
+            <div class="col-md-4 d-flex align-items-center">
+                <a href="/static" class="mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1">
+                    <img class="footer-icon" src="{% static 'vendor/img/icon/note-black.png' %}" alt="413">
+                </a>
+                <span class="mb-3 mb-md-0 text-muted">&copy; 2023 MyPythonProject, Inc</span>
+            </div>
+
+            <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
+                <li><a href="#"><img
+                        src="{% static 'vendor/img/icon/telegram.png' %}" class="composition__img">
+                </a></li>
+                <li><a href="#"><img src="{% static 'vendor/img/icon/gmail.png' %}" class="composition__img">
+                </a></li>
+                <li><a href="#"><img src="{% static 'vendor/img/icon/instagram.png' %}"
+                                     class="composition__img composition__img_instagram">
+                </a></li>
+            </ul>
+        </footer>
+    </div>
+</footer>
+</html>

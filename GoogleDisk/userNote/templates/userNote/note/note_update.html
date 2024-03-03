@@ -1,0 +1,258 @@
+{% extends 'userNote/base.html' %}
+{% load static %}
+
+{% block otherScripts %}
+    <script src="{% static 'vendor/js/input_file_complete.js' %}" defer></script>
+    <title>Редагування нотатки</title>
+{% endblock %}
+
+{% block mainBlock %}
+    <main class="container">
+        <form action="{% url 'note:updateNoteConfirm' user_note.id user_note.note_slug %}" method="post">
+            {% csrf_token %}
+            <div class="my-3 p-3 bg-body rounded shadow-sm">
+                <h6 class="border-bottom pb-2 mb-0">Назва:</h6>
+                <div class="d-flex text-muted pt-3 element" onmouseover="showEditBtn(this)"
+                     onmouseout="hideEditBtn(this)">
+                    <div class="image-container">
+                        <a class="nav-link" href="#">
+                            <img id="folder-img" src="{% if folder_img %}{{ folder_img }}{% else %}{% static 'vendor/img/icon/folder-black.png' %}{% endif %}"
+                                 class="note-icon"
+                                 alt="folder-img">
+                        </a>
+                    </div>
+                    <div class="input-group mb-3">
+                        {{ form_note.note_name }}
+                        <button type="button" id="folder-btn" class="btn btn-danger zi-0">
+                            {% if folder_name %}{{ folder_name }}{% elif folder.folder_name %}{{ folder.folder_name }} {% else %}Без
+                                папки{% endif %} {{ folder.folder_name }}</button>
+                        <button type="button" class="btn btn-danger dropdown-toggle dropdown-toggle-split zi-0"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                            <span class="visually-hidden">Toggle Dropdown</span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            {% for folder in folders %}
+                                <li>
+                                    <button type="button" class="dropdown-item folder-btn"
+                                            onclick="sendFolderData('{{ folder.folder_name }}')"
+                                            data-folder="{{ folder.folder_name }}"
+                                            data-img="{{ folder.folder_img.url }}">{{ folder.folder_name }}</button>
+                                </li>
+                            {% endfor %}
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li>
+                                <button type="button" class="dropdown-item folder-btn"
+                                        data-folder="Без папки"
+                                        data-img="{% static 'vendor/img/icon/folder-black.png' %}">Без папки
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="my-3 p-3 bg-body rounded shadow-sm">
+                <h6 class="border-bottom pb-2 mb-0">Введіть текст:</h6>
+                <div class=" text-muted">
+                    <div class="form-floating text_area">
+                        {{ form_note.note_content }}
+                        <label for="{{ id_note_content }}">Текст нотатки:</label>
+                        <div class="input-group flex-nowrap">
+                            <div class="input-group d-flex justify-content-start mt-3">
+                                <input type="submit" value="+ Зберегти" class="btn btn-danger zi-0"/>
+                            </div>
+                            <div class="input-group flex-nowrap text_area__buttons d-flex justify-content-end mt-3">
+                                <p>Розмір тексту: </p>
+                                <div class="dropdown text_area__buttons__dropdown">
+                                    <!-- Resizing text text-area -->
+                                    <a class="btn btn-default dropdown-toggle" href="#" role="button"
+                                       data-bs-toggle="dropdown" aria-expanded="false">
+                                        1.0
+                                    </a>
+                                    <ul class="dropdown-menu dropdown-item__element text_area__buttons__font_size">
+                                        <li>
+                                            <ul class="list-group list-group-horizontal">
+                                                <li><a class="dropdown-item" href="#"
+                                                       onclick="changeFontSize(this, 0.4)">0.4</a></li>
+                                                <li><a class="dropdown-item active" href="#"
+                                                       onclick="changeFontSize(this, 1)">1.0</a></li>
+                                                <li><a class="dropdown-item" href="#"
+                                                       onclick="changeFontSize(this, 1.6)">1.6</a></li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <ul class="list-group list-group-horizontal-sm">
+                                                <li><a class="dropdown-item" href="#"
+                                                       onclick="changeFontSize(this, 0.6)">0.6</a></li>
+                                                <li><a class="dropdown-item" href="#"
+                                                       onclick="changeFontSize(this, 1.2)">1.2</a></li>
+                                                <li><a class="dropdown-item" href="#"
+                                                       onclick="changeFontSize(this, 1.8)">1.8</a></li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <ul class="list-group list-group-horizontal-md">
+                                                <li><a class="dropdown-item" href="#"
+                                                       onclick="changeFontSize(this, 0.8)">0.8</a></li>
+                                                <li><a class="dropdown-item" href="#"
+                                                       onclick="changeFontSize(this, 1.4)">1.4</a></li>
+                                                <li><a class="dropdown-item" href="#"
+                                                       onclick="changeFontSize(this, 2)">2.0</a></li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <div class="my-3 p-3 bg-body rounded shadow-sm">
+            <h6 class="border-bottom pb-2 mb-0">Прикріпити файли:</h6>
+            <div class="mt-3 border-bottom pb-2">
+                <form id="inputFiles" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="btn-group" role="group" style="width: 100%">
+                        <input type="file" id="fileInput" class="form-control" multiple>
+                        <input type="button" value="Завантажити" class="btn btn-danger" style="width: 8.5rem;"
+                               onclick="uploadFile();">
+                    </div>
+                </form>
+            </div>
+
+
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="image-tab" data-bs-toggle="tab"
+                            data-bs-target="#image-tab-pane"
+                            type="button" role="tab" aria-controls="image-tab-pane" aria-selected="true">Зображення
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="video-tab" data-bs-toggle="tab" data-bs-target="#video-tab-pane"
+                            type="button" role="tab" aria-controls="video-tab-pane" aria-selected="false">Відео
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="audio-tab" data-bs-toggle="tab" data-bs-target="#audio-tab-pane"
+                            type="button" role="tab" aria-controls="audio-tab-pane" aria-selected="false">Аудіо
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="files-tab" data-bs-toggle="tab" data-bs-target="#files-tab-pane"
+                            type="button" role="tab" aria-controls="files-tab-pane" aria-selected="false">Файли
+                    </button>
+                </li>
+            </ul>
+            <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade show active" id="image-tab-pane" role="tabpanel"
+                     aria-labelledby="image-tab"
+                     tabindex="0">
+                    <div class="d-flex flex-wrap" id="imageContainer">
+                        {% for img in content_img %}
+                            <div class="position-relative">
+                                <div class="position-relative"><img
+                                        class="rounded imageContent ms-2 mt-3 mb-1 clickable"
+                                        src="{{ img }}"
+                                        alt="Card image"></div>
+                                <button type="button" class="btn-close position-absolute close_img_btn"
+                                        aria-label="Close" data-file="{{ img }}" data-type="note_img"></button>
+                            </div>
+                        {% endfor %}
+                        <div id="overlay" class="overlay"></div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="video-tab-pane" role="tabpanel" aria-labelledby="video-tab"
+                     tabindex="0">
+                    <div id="videoContainer" class="d-flex flex-wrap">
+                        {% for video in content_video %}
+                            <div class="ms-2 custom-video-player position-relative">
+                                <video class="videoContent" controls>
+                                    <source src="{{ video }}" type="video/mp4">
+                                </video>
+                                <div class="custom-controls">
+                                    <button type="button" class="btn-close position-absolute close_vid_btn"
+                                            aria-label="Close" data-file="{{ video }}"
+                                            data-type="note_video"></button>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="audio-tab-pane" role="tabpanel" aria-labelledby="audio-tab"
+                     tabindex="0">
+                    <div id="audioContainer" class="mt-3 d-flex flex-wrap">
+                        {% for audio in content_audio %}
+                            <div class="mobile-box me-2 position-relative"
+                                 style="margin-bottom:0.8rem">
+                                <div class="card">
+                                    <div class="bg-image hover-overlay ripple" data-mdb-ripple-color="light">
+                                        <img class="card-img-top"
+                                             src="{% if audio.note_audio_image %} {{ audio.note_audio_image }}
+                                                      {% else %} {% static 'vendor/img/icon/music_img.png' %} {% endif %}"
+                                             alt="Card image cap">
+                                    </div>
+                                    <div class="custom-controls">
+                                        <button type="button" class="btn-close position-absolute close_aud_btn"
+                                                aria-label="Close" data-file="{{ audio.note_audio }}"
+                                                data-type="note_audio"></button>
+                                    </div>
+                                    <div class="card-body text-center">
+                                        <h5 class="h5 font-weight-bold">{{ audio.note_audio_title }}</h5>
+                                        <p class="mb-0">{{ audio.note_audio_author }}</p>
+                                        <audio class="music">
+                                            <source src="{{ audio.note_audio }}">
+                                        </audio>
+                                        <div class="audioplayer">
+                                            <a onclick="togglePlayPause(this)" class="audioplayer">
+                                                <img src="{% static 'vendor/img/icon/play-button.png' %}"
+                                                     class="pButton fas fa-play" alt="playBtn">
+                                            </a>
+                                            <div class="timeline" onclick="updateTime(this, event)">
+                                                <div class="playhead"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="files-tab-pane" role="tabpanel" aria-labelledby="files-tab"
+                     tabindex="0">
+                    <div id="otherContainer" class="d-flex flex-wrap">
+                        {% for file in content_other %}
+                            <div class="card shadow-sm mt-3 mb-1 ms-3 file_card">
+                                <img src="{% static 'vendor/img/icon/file.png' %}"
+                                     class="border-bottom" alt="file-img">
+                                <div class="card-body">
+                                    <div class="custom-controls">
+                                        <button type="button" class="btn-close position-absolute close_file_btn"
+                                                aria-label="Close" style="top: 0 !important;"
+                                                data-file="{{ file.note_other }}"
+                                                data-type="note_other"></button>
+                                    </div>
+                                    <p class="card-text">{{ file.note_other_name }}</p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="btn-group">
+                                            <button type="button" id="downloadBtn"
+                                                    data-file-path="/content/files/other/{{ file.note_other_name }}"
+                                                    data-file-name="{{ file.note_other_name }}"
+                                                    class="btn btn-sm btn-outline-secondary btn-download">
+                                                Download
+                                            </button>
+                                        </div>
+                                        <small class="text-muted">{{ file.note_other_size }}mb</small>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock %}

@@ -1,0 +1,28 @@
+.sidebar
+    z-index: 100 !important
+    width: 250px
+    height: 100%
+    position: fixed
+    top: 0
+    left: 0rem /* Скрытая начальная позиция */
+    background-color: #333
+    padding: 15px
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5)
+    transition: left 0.5s ease /* Плавное появление/скрытие */
+    &__img
+        height: 1.3rem
+        width: 1.3rem
+        transition: 0.5s ease
+    &__tagName
+        transition: 0.5s ease
+    
+
+
+.sidebar p
+    color: #fff
+
+#toggle-sidebar 
+    cursor: pointer
+
+.add-butns
+    margin-top: 1.5rem

@@ -1,0 +1,139 @@
+{% extends 'workspaces/base.html' %}
+{% load static %}
+
+{% block tagBar %}
+    <!-- Tag bar -->
+    <div id="" class="nav-scroller bg-body shadow-sm">
+        <nav class="nav nav-tag" aria-label="Secondary navigation">
+            <a id="tag-section" class="nav-link active nav-tag-but nav-button">Теги:</a>
+            {% for tag in tags %}
+                <a class="nav-button nav-link" data-tag="{{ tag.id }}"
+                   onclick="toggleColor(this)">
+                    {{ tag.tag_name }}
+                    <span class="nav-button badge text-bg-light rounded-pill align-text-bottom">{{ tag.tag_count }}</span>
+                </a>
+            {% endfor %}
+        </nav>
+    </div>
+    <script src="{% static 'vendor/js/sortedByTags.js' %}" defer></script>
+    <script>
+        var userNoteTagIds = JSON.parse('{{ included_tags }}');
+        console.log(userNoteTagIds);
+
+        window.onload = function () {
+            userNoteTagIds.forEach(function (tagId) {
+                var tagElement = document.querySelector('[data-tag="' + tagId + '"]');
+                if (tagElement) {
+                    toggleColor(tagElement);
+                }
+            });
+        };
+    </script>
+{% endblock %}
+
+
+{% block content %}
+    <div class="my-3 p-3 bg-body rounded shadow-sm">
+        <h6 class="border-bottom pb-2 mb-0">Усі мої записи:</h6>
+        {% for note in notes %}
+            <div class="d-flex text-muted pt-3 element" onmouseover="showEditBtn(this)"
+                 onmouseout="hideEditBtn(this)">
+                <div class="image-container">
+                    <a class="nav-link">
+                        {% for folder in note.note_folder.all %}
+                            <img src="{{ folder.folder_img.url }}"
+                                 class="note-icon" alt="123">
+                        {% endfor %}
+                    </a>
+                </div>
+                <p class="pb-3 mb-0 small lh-sm border-bottom w-100">
+                    <a class="nav-link text-hover" href="{% url 'note:updateNote' note.id note.note_slug %}"><strong
+                            class="d-flex text-gray-dark">{{ note.note_name }}</strong>
+                        {% if note.note_content|length > 500 %}{{ note.note_content|slice:":500" }}... {% else %}
+                            {{ note.note_content }}{% endif %}</a>
+                </p>
+                <!-- Split dropend button -->
+                <div class="align-self-start btn-group-sm btn-group dropend edit__btn pb-3 edit_btn position-relative">
+                    <button type="button" class="btn btn-outline-warning edit_btn__btns">
+                        ...
+                    </button>
+                    <button type="button"
+                            class="btn btn-outline-warning edit_btn__btns dropdown-toggle dropdown-toggle-split"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                    </button>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="{% url 'note:updateNote' note.id note.note_slug %}">Відкрити</a>
+                        <a class="dropdown-item" href="{% url 'workspace:safePut' note.id 'workspace:allNotes' %}">В сховище</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="{% url 'workspace:noteDelete' note.id 'workspace:allNotes' %}">Видалити</a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    <nav aria-label="Page navigation example">
+        {% if notes.has_other_pages %}
+            <ul class="pagination justify-content-center">
+                <li class="page-item">
+                    <a class="page-link"
+                       href="{% if notes.has_previous %}?page={{ notes.previous_page_number }}{% endif %}"
+                       aria-label="Previous"> <span aria-hidden="true"><span
+                            class="paginationButton">&laquo;</span></span>
+                        <span class="sr-only"></span>
+                    </a>
+                </li>
+                {% for page_num in notes.paginator.page_range %}
+                    {% if page_num <= 3 or page_num == notes.paginator.num_pages %}
+                        <li class="page-item{% if notes.number == page_num %} active{% endif %}">
+                            <a class="page-link" href="?page={{ page_num }}"><span
+                                    class="paginationButton">{{ page_num }}</span></a>
+                        </li>
+                    {% elif page_num == notes.number %}
+                        <li class="page-item{% if notes.number == page_num %} active{% endif %}">
+                            <a class="page-link" href="?page={{ page_num }}"><span
+                                    class="paginationButton">{{ page_num }}</span></a>
+                        </li>
+                    {% elif page_num == notes.paginator.num_pages %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ page_num }}">{{ page_num }}</a>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+                <li class="page-item">
+                    <a class="page-link" href="{% if notes.has_next %}?page={{ notes.next_page_number }}{% endif %}"
+                       aria-label="Next"> <span aria-hidden="true"><span class="paginationButton">&raquo;</span></span>
+                        <span class="sr-only"></span>
+                    </a>
+                </li>
+            </ul>
+            </nav>
+        {% endif %}
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const activeElement = document.querySelector('.page-item.active');
+            const pageItems = document.querySelectorAll('.page-item');
+            const thirdItemIndex = 3;
+
+            if (activeElement && pageItems.length > thirdItemIndex + 1) {
+                const pageNum = parseInt(activeElement.querySelector('.paginationButton').innerText);
+                let nextDisabledElement;
+
+                if (pageNum >= 4 && pageNum < {{ notes.paginator.num_pages }} -1) {
+                    nextDisabledElement = document.createElement('li');
+                    nextDisabledElement.className = 'page-item disabled';
+                    nextDisabledElement.innerHTML = '<span class="page-link">...</span>';
+                    activeElement.parentNode.insertBefore(nextDisabledElement, activeElement.nextSibling);
+                }
+
+                if (pageNum !== 4 && {{ notes.paginator.num_pages }} > 4) {
+                    nextDisabledElement = document.createElement('li');
+                    nextDisabledElement.className = 'page-item disabled';
+                    nextDisabledElement.innerHTML = '<span class="page-link">...</span>';
+                    const parent = pageItems[thirdItemIndex].parentNode;
+                    parent.insertBefore(nextDisabledElement, pageItems[thirdItemIndex + 1]);
+                }
+            }
+        });
+
+    </script>
+{% endblock %}

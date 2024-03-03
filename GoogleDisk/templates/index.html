@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/offcanvas.css">
+    <link rel="stylesheet" href="css/dropdowns.css">
+    <script src="js/main.js" defer></script>
+    <script src="js/open_windows.js" defer></script>
+    <script src="js/bootstrap.bundle.min.js" defer></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <title>Заметки</title>
+</head>
+
+<body class="bg-light">
+    <!-- Navigation bar -->
+    <nav class="nav-padding navbar navbar-expand-lg fixed-top navbar-dark bg-dark" aria-label="Main navigation">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#" id="toggle-sidebar">
+                <img src="img/icon/note.png" class="icon"> 
+                Мій нотатник</a>
+            <button class="navbar-toggler p-0 border-0" type="button" id="navbarSideCollapse"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="navbar-collapse offcanvas-collapse" id="navbarsExampleDefault">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a href="index.html" class="nav-link active" aria-current="page">Головна</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="createPassBtn">Сейф</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="korzina.html" class="nav-link">Корзина</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown"
+                            aria-expanded="false">Додати</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" id="createTagBtn1" href="#">Тег</a></li>
+                            <li><a class="dropdown-item" id="createFolderBtn1" href="#">Папку</a></li>
+                            <li><a class="dropdown-item" href="noteCreate.html">Запис</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <form class="d-flex" role="search">
+                    <input class="form-control me-2" type="search" placeholder="Знайти..." aria-label="Search">
+                    <button class="btn btn-outline-warning" type="submit">Пошук</button>
+                </form>
+            </div>
+        </div>
+    </nav>
+    <!-- Tag bar -->
+    <div id="" class="nav-scroller bg-body shadow-sm">
+        <nav class="nav nav-tag" aria-label="Secondary navigation">
+            <a id="tag-section" class="nav-link active nav-tag-but nav-button" aria-current="tags">Теги:</a>
+            <a class="nav-button nav-link" href="#" onclick="toggleColor(this)">
+                Друзі
+                <span class="nav-button badge text-bg-light rounded-pill align-text-bottom">27</span>
+            </a>
+            <a class="nav-link nav-button" href="#" onclick="toggleColor(this)">
+                Дослідження
+                <span class="nav-button badge text-bg-light rounded-pill align-text-bottom">12</span>
+            </a>
+            <a class="nav-link nav-button" href="#" onclick="toggleColor(this)">
+                Пропозиції
+                <span class="nav-button badge text-bg-light rounded-pill align-text-bottom">18</span>
+            </a>
+            <a class="nav-link nav-button" href="#" onclick="toggleColor(this)">
+                Тег
+                <span class="nav-button badge text-bg-light rounded-pill align-text-bottom">1</span>
+            </a>
+            <a class="nav-link nav-button" href="#" onclick="toggleColor(this)">
+                Тег
+                <span class="nav-button badge text-bg-light rounded-pill align-text-bottom">1</span>
+            </a>
+            <a class="nav-link nav-button" href="#" onclick="toggleColor(this)">
+                Тег
+                <span class="nav-button badge text-bg-light rounded-pill align-text-bottom">1</span>
+            </a>
+            <a class="nav-link nav-button" href="#" onclick="toggleColor(this)">
+                Тег
+                <span class="nav-button badge text-bg-light rounded-pill align-text-bottom">1</span>
+            </a>
+            <a class="nav-link nav-button" href="#" onclick="toggleColor(this)">
+                Тег
+                <span class="nav-button badge text-bg-light rounded-pill align-text-bottom">1</span>
+            </a>
+        </nav>
+    </div>
+    <!-- Sidebar -->
+    <div class="d-flex flex-column flex-shrink-0 p-3 text-bg-dark sidebar" style="width: 280px;">
+        <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+            <svg class="bi pe-none me-2" width="40" height="32">
+                <use xlink:href="#bootstrap" />
+            </svg>
+            <span class="fs-4">Sidebar</span>
+        </a>
+        <hr>
+        <ul class="nav nav-pills flex-column mb-auto">
+            <li class="nav-item">
+                <a href="" class="nav-link active" aria-current="page" id="scrollToTopBtn">
+                    <img src="img/icon/tag.png" class="sidebar__img me-2">
+                    <span class="sidebar__tagName">Теги</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#folder-section" class="nav-link text-white">
+                    <img src="img/icon/folder.png" class="sidebar__img me-2">
+                    <span class="sidebar__tagName">Папки</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#notes-section" class="nav-link text-white">
+                    <img src="img/icon/documents.png" class="sidebar__img me-2">
+                    <span class="sidebar__tagName">Записи</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#footer-section" class="nav-link text-white">
+                    <img src="img/icon/callback.png" class="sidebar__img me-2">
+                    <span class="sidebar__tagName">Зв'язок зі мною</span>
+                </a>
+            </li>
+
+
+            <li class="add-butns nav-item">
+                <a id="createTagBtn" href="#" class="nav-link text-white">
+                    <img src="img/icon/add-white.png" class="sidebar__img me-2">
+                    <span class="sidebar__tagName">Створити тег →</span>
+                </a>
+            </li>
+            <li id="createFolderBtn" class="nav-item">
+                <a href="#" class="nav-link text-white">
+                    <img src="img/icon/add-white.png" class="sidebar__img me-2">
+                    <span class="sidebar__tagName">Створити папку →</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="noteCreate.html" class="nav-link text-white">
+                    <img src="img/icon/add-white.png" class="sidebar__img me-2">
+                    <span class="sidebar__tagName">Створити запис →</span>
+                </a>
+            </li>
+        </ul>
+        <hr>
+        <div class="dropdown">
+            <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
+                data-bs-toggle="dropdown" aria-expanded="false">
+                <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
+                <strong>Username</strong>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
+                <li><a class="dropdown-item" href="noteCreate.html">Створити запис</a></li>
+                <li>
+                    <hr class="dropdown-divider">
+                </li>
+                <li><a class="dropdown-item" href="registr.html">Вийти</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <main class="container">
+        <div class="my-3 p-3 bg-body rounded shadow-sm">
+            <h6 class="border-bottom pb-2 mb-0">Останні оновлення:</h6>
+                <div class="d-flex text-muted pt-3 element" onmouseover="showEditBtn(this)" onmouseout="hideEditBtn(this)">
+                    <div class="image-container">
+                        <a class="nav-link" href="#">
+                            <img src="img/icon/pallete.png" class="note-icon">
+                        </a>
+                    </div>
+
+                    <p class="pb-3 mb-0 small lh-sm border-bottom">
+                        <a class="nav-link text-hover" href="note.html"><strong class="d-flex text-gray-dark">Список
+                                покупок</strong>
+                            Some representative placeholder content, with some information about this user. Imagine this
+                            being
+                            some sort of status update, perhaps? Some representative placeholder content, with some
+                            information about this user. Imagine this being
+                            some sort of status update, perhaps? Some representative placeholder content, with some
+                            information about this user. Imagine this being
+                            some sort of status update, perhaps? Some representative placeholder content, with some
+                            information about this user. Imagine this being
+                            some sort of status update, perhaps?</a>
+                    </p>
+                    <!-- Split dropend button -->
+                    <div class="align-self-start btn-group-sm btn-group dropend edit__btn pb-3 edit_btn position-relative">
+                        <button type="button" class="btn btn-outline-warning edit_btn__btns">
+                            ...
+                        </button>
+                        <button type="button" class="btn btn-outline-warning edit_btn__btns dropdown-toggle dropdown-toggle-split"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                        </button>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="#">Відкрити</a>
+                            <a class="dropdown-item" href="#">Перейменувати</a>
+                            <a class="dropdown-item" href="#">Змінити папку</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#">Видалити</a>
+                        </div>
+                    </div>
+                </div>
+            <div class="d-flex text-muted pt-3 element" onmouseover="showEditBtn(this)" onmouseout="hideEditBtn(this)">
+                <div class="image-container">
+                    <a class="nav-link" href="#">
+                        <img src="img/icon/pallete.png" class="note-icon">
+                    </a>
+                </div>
+            
+                <p class="pb-3 mb-0 small lh-sm border-bottom">
+                    <a class="nav-link text-hover" href="#"><strong class="d-flex text-gray-dark">Список
+                            покупок</strong>
+                        Some representative placeholder content, with some information about this user. Imagine this
+                        being
+                        some sort of status update, perhaps? Some representative placeholder content, with some
+                        information about this user. Imagine this being
+                        some sort of status update, perhaps? Some representative placeholder content, with some
+                        information about this user. Imagine this being
+                        some sort of status update, perhaps? Some representative placeholder content, with some
+                        information about this user. Imagine this being
+                        some sort of status update, perhaps?</a>
+                </p>
+                <!-- Split dropend button -->
+                <div class="align-self-start btn-group-sm btn-group dropend edit__btn pb-3 edit_btn position-relative">
+                    <button type="button" class="btn btn-outline-warning edit_btn__btns">
+                        ...
+                    </button>
+                    <button type="button" class="btn btn-outline-warning edit_btn__btns dropdown-toggle dropdown-toggle-split"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                    </button>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="#">Відкрити</a>
+                        <a class="dropdown-item" href="#">Перейменувати</a>
+                        <a class="dropdown-item" href="#">Змінити папку</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">Видалити</a>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex text-muted pt-3 element" onmouseover="showEditBtn(this)" onmouseout="hideEditBtn(this)">
+                <div class="image-container">
+                    <a class="nav-link" href="#">
+                        <img src="img/icon/pallete.png" class="note-icon">
+                    </a>
+                </div>
+            
+                <p class="pb-3 mb-0 small lh-sm border-bottom">
+                    <a class="nav-link text-hover" href="#"><strong class="d-flex text-gray-dark">Список
+                            покупок</strong>
+                        Some representative placeholder content, with some information about this user. Imagine this
+                        being
+                        some sort of status update, perhaps? Some representative placeholder content, with some
+                        information about this user. Imagine this being
+                        some sort of status update, perhaps? Some representative placeholder content, with some
+                        information about this user. Imagine this being
+                        some sort of status update, perhaps? Some representative placeholder content, with some
+                        information about this user. Imagine this being
+                        some sort of status update, perhaps?</a>
+                </p>
+                <!-- Split dropend button -->
+                <div class="align-self-start btn-group-sm btn-group dropend edit__btn pb-3 edit_btn position-relative">
+                    <button type="button" class="btn btn-outline-warning edit_btn__btns">
+                        ...
+                    </button>
+                    <button type="button" class="btn btn-outline-warning edit_btn__btns dropdown-toggle dropdown-toggle-split"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                    </button>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="#">Відкрити</a>
+                        <a class="dropdown-item" href="#">Перейменувати</a>
+                        <a class="dropdown-item" href="#">Змінити папку</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">Видалити</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="folder-section" class="my-3 p-3 bg-body rounded shadow-sm">
+            <a class="border-bottom nav-link" href="#">
+                <div id="createFolderBtn2" href="#" class="flex-container">
+                    <img src="img/icon/add.png" class="add-icon">
+                    <h6 class="section-name pb-2 mb-0">Папки:</h6>
+                </div>
+            </a>
+            
+            <div class="d-flex text-muted pt-3" onmouseover="showEditBtn(this)" onmouseout="hideEditBtn(this)">
+                <div class="image-container">
+                    <a class="nav-link" href="#">
+                        <img src="img/icon/pallete.png" class="note-icon">
+                    </a>
+                </div>
+
+                <div class="pb-3 mb-0 small lh-sm border-bottom w-100">
+                    <a class="nav-link text-hover" href="#">
+                        <div class="d-flex justify-content-between">
+                            <strong class="text-gray-dark">Думки</strong>
+                        </div>
+                        <span class="d-block">Тут я зберігаю свої думки</span>
+                    </a>
+                </div>
+                <div class="align-self-start btn-group-sm btn-group dropend edit__btn pb-3 edit_btn position-relative">
+                    <button type="button" class="btn btn-outline-warning edit_btn__btns">
+                        ...
+                    </button>
+                    <button type="button" class="btn btn-outline-warning edit_btn__btns dropdown-toggle dropdown-toggle-split"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                    </button>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="#">Відкрити</a>
+                        <a class="dropdown-item" href="#">Перейменувати/змінити зображення</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">Видалити</a>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex text-muted pt-3" onmouseover="showEditBtn(this)" onmouseout="hideEditBtn(this)">
+                <div class="image-container">
+                    <a class="nav-link" href="#">
+                        <img src="img/icon/pencil.png" class="note-icon">
+                    </a>
+                </div>
+
+                <div class="pb-3 mb-0 small lh-sm border-bottom w-100">
+                    <a class="nav-link text-hover" href="#">
+                        <div class="d-flex justify-content-between">
+                            <strong class="text-gray-dark">Нотатник python</strong>
+                        </div>
+                        <span class="d-block"></span>
+                    </a>
+                </div>
+                <div class="align-self-start btn-group-sm btn-group dropend edit__btn pb-3 edit_btn position-relative">
+                    <button type="button" class="btn btn-outline-warning edit_btn__btns">
+                        ...
+                    </button>
+                    <button type="button" class="btn btn-outline-warning edit_btn__btns dropdown-toggle dropdown-toggle-split"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                    </button>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="#">Відкрити</a>
+                        <a class="dropdown-item" href="#">Перейменувати/змінити зображення</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">Видалити</a>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex text-muted pt-3" onmouseover="showEditBtn(this)" onmouseout="hideEditBtn(this)">
+                <div class="image-container">
+                    <a class="nav-link" href="#">
+                        <img src="img/icon/money.png" class="note-icon">
+                    </a>
+                </div>
+                <div class="pb-3 mb-0 small lh-sm border-bottom w-100">
+                    <a class="nav-link text-hover" href="#">
+                        <div class="d-flex justify-content-between">
+                            <strong class="text-gray-dark">Нотатник python</strong>
+                        </div>
+                        <span class="d-block">Мої плани стосовно роботи</span>
+                    </a>
+                </div>
+                <div class="align-self-start btn-group-sm btn-group dropend edit__btn pb-3 edit_btn position-relative">
+                    <button type="button" class="btn btn-outline-warning edit_btn__btns">
+                        ...
+                    </button>
+                    <button type="button" class="btn btn-outline-warning edit_btn__btns dropdown-toggle dropdown-toggle-split"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                    </button>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="#">Відкрити</a>
+                        <a class="dropdown-item" href="#">Перейменувати/змінити зображення</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">Видалити</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="my-3 p-3 bg-body rounded shadow-sm">
+            <a id="notes-section" class="border-bottom nav-link" href="noteCreate.html">
+                <div class="flex-container">
+                    <img src="img/icon/add.png" class="add-icon">
+                    <h6 class="section-name pb-2 mb-0">Не відфільтровані записи:</h6>
+                </div>
+            </a>
+            <div class="d-flex text-muted pt-3" onmouseover="showEditBtn(this)" onmouseout="hideEditBtn(this)">
+                <p class="pb-3 mb-0 small lh-sm border-bottom">
+                    <a class="nav-link text-hover" href="#"><strong class="d-block text-gray-dark">Список
+                            покупок</strong>
+                        Some representative placeholder content, with some information about this user. Imagine this
+                        being
+                        some sort of status update, perhaps? Some representative placeholder content, with some
+                        information about this user. Imagine this being
+                        some sort of status update, perhaps? Some representative placeholder content, with some
+                        information about this user. Imagine this being
+                        some sort of status update, perhaps? Some representative placeholder content, with some
+                        information about this user. Imagine this being
+                        some sort of status update, perhaps?</a>
+                </p>
+                <div class="align-self-start btn-group-sm btn-group dropend edit__btn pb-3 edit_btn position-relative">
+                    <button type="button" class="btn btn-outline-warning edit_btn__btns">
+                        ...
+                    </button>
+                    <button type="button" class="btn btn-outline-warning edit_btn__btns dropdown-toggle dropdown-toggle-split"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                    </button>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="#">Відкрити</a>
+                        <a class="dropdown-item" href="#">Перейменувати</a>
+                        <a class="dropdown-item" href="#">Змінити папку</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">Видалити</a>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex text-muted pt-3" onmouseover="showEditBtn(this)" onmouseout="hideEditBtn(this)">
+                <p class="pb-3 mb-0 small lh-sm border-bottom">
+                    <a class="nav-link text-hover" href="#"><strong class="d-block text-gray-dark">Список
+                            покупок</strong>
+                        Some representative placeholder content, with some information about this user. Imagine this
+                        being
+                        some sort of status update, perhaps? Some representative placeholder content, with some
+                        information about this user. Imagine this being
+                        some sort of status update, perhaps? Some representative placeholder content, with some
+                        information about this user. Imagine this being
+                        some sort of status update, perhaps? Some representative placeholder content, with some
+                        information about this user. Imagine this being
+                        some sort of status update, perhaps?</a>
+                </p>
+                <div class="align-self-start btn-group-sm btn-group dropend edit__btn pb-3 edit_btn position-relative">
+                    <button type="button" class="btn btn-outline-warning edit_btn__btns">
+                        ...
+                    </button>
+                    <button type="button" class="btn btn-outline-warning edit_btn__btns dropdown-toggle dropdown-toggle-split"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                    </button>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="#">Відкрити</a>
+                        <a class="dropdown-item" href="#">Перейменувати</a>
+                        <a class="dropdown-item" href="#">Змінити папку</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">Видалити</a>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex text-muted pt-3" onmouseover="showEditBtn(this)" onmouseout="hideEditBtn(this)">
+                <p class="pb-3 mb-0 small lh-sm border-bottom">
+                    <a class="nav-link text-hover" href="#"><strong class="d-block text-gray-dark">Список
+                            покупок</strong>
+                        Some representative placeholder content, with some information about this user. Imagine this
+                        being
+                        some sort of status update, perhaps? Some representative placeholder content, with some
+                        information about this user. Imagine this being
+                        some sort of status update, perhaps? Some representative placeholder content, with some
+                        information about this user. Imagine this being
+                        some sort of status update, perhaps? Some representative placeholder content, with some
+                        information about this user. Imagine this being
+                        some sort of status update, perhaps?</a>
+                </p>
+                <div class="align-self-start btn-group-sm btn-group dropend edit__btn pb-3 edit_btn position-relative">
+                    <button type="button" class="btn btn-outline-warning edit_btn__btns">
+                        ...
+                    </button>
+                    <button type="button" class="btn btn-outline-warning edit_btn__btns dropdown-toggle dropdown-toggle-split"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                    </button>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="#">Відкрити</a>
+                        <a class="dropdown-item" href="#">Перейменувати</a>
+                        <a class="dropdown-item" href="#">Змінити папку</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">Видалити</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <!-- Tag addition window -->
+    <div id="tagForm" class="addTag__container px-5 my-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card border-0 rounded-3 shadow-lg">
+                    <div class="card-body pt-4 pr-4 pl-4 pb-2">
+                        <div class="text-center addTag__text">
+                            <div class="h1 fw-light">Додати тег</div>
+                        </div>
+                        <form>
+                            <!-- Tag-Name Input -->
+                            <div class="form-floating mb-3">
+                                <input class="form-control" id="tag_create" type="text" placeholder="Name"
+                                    oninput="addHashSymbol()" onfocus="handleFocus()" data-sb-validations="required"/>
+                                <label for="name">Назва тегу:</label>
+                                <div class="invalid-feedback" data-sb-feedback="name:required">Name is required.</div>
+                            </div>    
+                            <!-- Submit button -->
+                            <div class="d-grid">
+                                <a href="../userMainWorkspace/templates/workspaces/workspace/all_notes.html" class="btn btn-primary btn-lg">Додати</a>
+                            </div>
+                            <p class="d-flex flex-row-reverse text-black-50 pt-2 creating_text_size">Щоб закрити вікно: Esc</p>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Folder addition window -->
+    <div id="folderForm" class="addTag__container px-5 my-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card border-0 rounded-3 shadow-lg">
+                    <div class="card-body pt-4 pr-4 pl-4 pb-2">
+                        <div class="text-center addTag__text">
+                            <div class="h1 fw-light">Створити папку</div>
+                        </div>
+                        <form>
+                            <div class="mb-3">
+                                <div class="d-flex justify-content-center mb-4">
+                                    <img id="selectedAvatar" src="img/icon/folder-black.png"
+                                        class="rounded-circle" style="width: 200px; height: 200px; object-fit: cover;" alt="example placeholder" />
+                                </div>
+                                <div class="d-flex justify-content-center">
+                                    <div class="btn btn-primary btn-rounded">
+                                        <label class="form-label text-white m-1" for="customFile2">Вибрати зображення</label>
+                                        <input type="file" class="form-control d-none" id="customFile2"
+                                            onchange="displaySelectedImage(event, 'selectedAvatar')" />
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Name Input -->
+                            <div class="form-floating mb-3">
+                                <input class="form-control" id="folder-create" type="text" placeholder="Name"
+                                    oninput="addHashSymbol()" onfocus="handleFocus()" data-sb-validations="required" />
+                                <label for="name">Назва папки:</label>
+                                <div class="invalid-feedback" data-sb-feedback="name:required">Name is required.</div>
+                            </div>
+                            <!-- Submit button -->
+                            <div class="d-grid">
+                                <a href="../userMainWorkspace/templates/workspaces/workspace/all_notes.html" class="btn btn-primary btn-lg">Створити</a>
+                            </div>
+                            <p class="d-flex flex-row-reverse text-black-50 pt-2 creating_text_size">Щоб закрити вікно: Esc</p>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Entering the archive password -->
+    <div id="passForm" class="addTag__container px-5 my-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card border-0 rounded-3 shadow-lg">
+                    <div class="card-body pt-4 pr-4 pl-4 pb-2">
+                        <div class="text-center addTag__text">
+                            <div class="h1 fw-light">Це ви?</div>
+                        </div>
+                        <form>
+                            <!-- Tag-Name Input -->
+                            <div class="input-group mb-3">
+                                <span class="input-group-text passEnter">Пароль:</span>
+                                <input type="text" aria-label="First number" class="form-control passEnter__input" maxlength="1" oninput="moveToNextInput(this, event)">
+                                <input type="text" aria-label="Second number" class="form-control passEnter__input" maxlength="1" oninput="moveToNextInput(this, event)">
+                                <input type="text" aria-label="Third number" class="form-control passEnter__input" maxlength="1" oninput="moveToNextInput(this, event)">
+                                <input type="text" aria-label="Fourth number" class="form-control passEnter__input" maxlength="1" oninput="moveToNextInput(this, event)">
+                            </div>
+                            <!-- Submit button -->
+                            <div class="d-grid">
+                                <a href="../userMainWorkspace/templates/workspaces/workspace/all_notes.html" class="btn btn-primary btn-lg">Увійти</a>
+                            </div>
+                            <div class="flex-container1" >
+                                <a id="forgotPasswordBtn" class="d-flex flex-row pt-2 creating_text_size creating_forgot_btn">Забув пароль</a>
+                                <p class="d-flex flex-row-reverse text-black-50 pt-2 creating_text_size">Щоб закрити вікно: Esc</p>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+<footer id="footer-section">
+    <div class="container">
+        <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
+            <div class="col-md-4 d-flex align-items-center">
+                <a href="/" class="mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1">
+                    <img class="footer-icon" src="img/icon/note-black.png">
+                </a>
+                <span class="mb-3 mb-md-0 text-muted">&copy; 2023 MyPythonProject, Inc</span>
+            </div>
+
+            <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
+                <li><a href="#"><img src="img/icon/telegram.png" class="composition__img">
+                    </a></li>
+                <li><a href="#"><img src="img/icon/gmail.png" class="composition__img">
+                    </a></li>
+                <li><a href="#"><img src="img/icon/instagram.png" class="composition__img composition__img_instagram">
+                    </a></li>
+            </ul>
+        </footer>
+    </div>
+</footer>
+</html>

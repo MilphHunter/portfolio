@@ -1,0 +1,69 @@
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+body {
+    background: linear-gradient(to right, #c04848, #480048);
+    min-height: 100vh
+}
+
+.text-gray {
+    color: #aaa
+}
+
+img {
+    height: 170px;
+    width: 140px
+}
+
+.text-header:hover {
+    text-decoration: underline;
+}
+
+.tags {
+    font-size: 10px;
+}
+
+.price {
+    color: green;
+    font-size: 14px;
+}
+
+.list-group-item:hover{
+    background: #e9e8e8;
+    cursor: pointer;
+}
+
+.fixed-elements {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    background-color: #f1f1f1;
+    border-radius: 10%;
+}
+
+.fixed-elements-text {
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: 10px;
+}
+
+.fixed-elements-text:hover{
+    cursor: pointer;
+    text-decoration: underline;
+}

@@ -74,7 +74,7 @@ Type   "q"            to quit
 #convertion table dictionarys
 L= {"m":1 ,
     "km":10**(-3) ,
-    "cm":10**(2) ,
+    "cm": 10 ** (2),
     "mm":10**(3)  ,
     "um":10**(6)  ,
     "nm":10**(9) ,

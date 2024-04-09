@@ -1,16 +1,6 @@
-<!--Please do not remove this part-->
-![Star Badge](https://img.shields.io/static/v1?label=%F0%9F%8C%9F&message=If%20Useful&style=style=flat&color=BC4E99)
-![Open Source Love](https://badges.frapsoft.com/os/v1/open-source.svg?v=103)
-
 # Slideshare to PDF
-### Main Window:
 
-![](./Images/window.png)
-<br/>
-
-### Downloaded file:
-
-![](./Images/Output.png)
+## Main Window:
 
 ## 🛠️ Description
 To download a presentation from slideshare we have to sign up to scribd, but with this script you can download 
@@ -33,10 +23,3 @@ Made with `python`
 - Clone the Project
 - Run `pip install requirements.txt`
 - Run `python main.py`
-
-
-## 🤖 Author
-[Vivek](https://github.com/vivekthedev)
-
-Any Questions?
-[Twitter](https://twitter.com/vivekthedev)

@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'account.apps.AccountConfig',
     'userNote.apps.UsernoteConfig',
     'taggit',
+    'allauth',
 ]
 
 MIDDLEWARE = [

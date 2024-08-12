@@ -1,2 +1,7 @@
 Django~=4.2
 mutagen~=1.47.0
+psycopg2
+django-taggit
+text_unidecode
+pillow
+django-allauth

@@ -1,0 +1,575 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- ===== Css Files ===== -->
+    <link rel="stylesheet" href="{% static 'vendor/css/main1.css' %}">
+    <link rel="stylesheet" href="{% static 'vendor/css/colors/color-1.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <!-- ===== Style Switcher ===== -->
+    <link rel="stylesheet" href="{% static 'vendor/css/colors/color-1.css' %}" class="alternate-style" title="color-1"
+          disabled>
+    <link rel="stylesheet" href="{% static 'vendor/css/colors/color-2.css' %}" class="alternate-style" title="color-2"
+          disabled>
+    <link rel="stylesheet" href="{% static 'vendor/css/colors/color-3.css' %}" class="alternate-style" title="color-3"
+          disabled>
+    <link rel="stylesheet" href="{% static 'vendor/css/colors/color-4.css' %}" class="alternate-style" title="color-4"
+          disabled>
+    <link rel="stylesheet" href="{% static 'vendor/css/colors/color-5.css' %}" class="alternate-style" title="color-5"
+          disabled>
+    <link rel="stylesheet" href="{% static 'vendor/css/style-switcher.css' %}">
+</head>
+
+<body>
+<!-- ===== Main Container Start ===== -->
+<div class="main-container">
+    <!-- ===== Aside Start ===== -->
+    <div class="aside">
+        <div class="logo">
+            <a href="#"><span>W</span>elcome!</a>
+        </div>
+        <div class="nav-toggler">
+            <span></span>
+        </div>
+        <ul class="nav">
+            <li><a href="#home" class="active compas" onclick="setActivePage(this)"><i class="fa fa-house"></i>Home</a>
+            </li>
+            <li><a href="#about" class="compas" onclick="setActivePage(this)"><i class="fa fa-user"></i>About</a></li>
+            <li><a href="#service" class="compas" onclick="setActivePage(this)"><i class="fa fa-list"></i>Services</a>
+            </li>
+            <li><a href="#portfolio" class="compas" onclick="setActivePage(this)"><i class="fa fa-briefcase"></i>Portfolio</a>
+            </li>
+            <li><a href="#contact" class="compas" onclick="setActivePage(this)"><i
+                    class="fa fa-comments"></i>Contact</a></li>
+        </ul>
+    </div>
+    <!-- ===== Aside End ===== -->
+    <!-- ===== Main Content Start ===== -->
+    <div class="main-content">
+        <!-- ===== Home Section Start ===== -->
+        <section class="home section" id="home">
+            <div class="container">
+                <div class="row">
+                    <div class="home-info padd-15">
+                        <h3 class="hello">Hello, my name is <span class="name">Dima Komarov</span></h3>
+                        <h3 class="my-profession">I'm a <span class="typing">Python Back-end Developer</span></h3>
+                        <p>I have been a developer for over one year. My skills are creating/configuring web-sites,
+                            deploying them, connecting services and many more...</p>
+                        <a href="#contact" class="btn hire-me">Hire Me</a>
+                    </div>
+                    <div class="home-img padd-15">
+                        <img src="{% static 'vendor/source/img/me.jpg' %}" alt="">
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- ===== Home Section End ===== -->
+        <!-- ===== About Section Start ===== -->
+        <section class="about section" id="about">
+            <div class="container">
+                <div class="row">
+                    <div class="section-title padd-15">
+                        <h2>About Me</h2>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="about-content padd-15">
+                        <div class="row">
+                            <div class="about-text padd-15">
+                                <h3>I'm Dima Komarov and <span>Python Developer</span></h3>
+                                <p>I chose to program in Python because of its simplicity, ambidexterity, and
+                                    multi-directional nature. This language makes it easy to solve practical problems
+                                    and see results quickly. Python's versatility has given me the opportunity to work
+                                    in a variety of areas, from web development to writing all sorts of scripts. My
+                                    learning journey started with online courses and progressed into creating my own
+                                    projects. Python has been my key to new opportunities and inspiration for further
+                                    growth :)</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="personal-info padd-15">
+                                <div class="row">
+                                    <div class="info-item padd-15">
+                                        <p>Birthday : <span>28 may 2004</span></p>
+                                    </div>
+                                    <div class="info-item padd-15">
+                                        <p>Age : <span>20</span></p>
+                                    </div>
+                                    <div class="info-item padd-15">
+                                        <p>Email : <span>dkomarov4444@gmail.com</span></p>
+                                    </div>
+                                    <div class="info-item padd-15">
+                                        <p>Phone : <span>+380-96-024-6255</span></p>
+                                    </div>
+                                    <div class="info-item padd-15">
+                                        <p>City : <span>Odesa</span></p>
+                                    </div>
+                                    <div class="info-item padd-15">
+                                        <p>Freelance : <span>Available</span></p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="buttons padd-15">
+                                        <a href="#contact" class="btn hire-me">Hire Me</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="skills padd-15">
+                                <div class="row">
+                                    <div class="skill-item padd-15">
+                                        <h5>Python</h5>
+                                        <div class="progress">
+                                            <div class="progress-in" style="width: 80%;"></div>
+                                            <div class="skill-percent">80%</div>
+                                        </div>
+                                    </div>
+                                    <div class="skill-item padd-15">
+                                        <h5>Django</h5>
+                                        <div class="progress">
+                                            <div class="progress-in" style="width: 65%;"></div>
+                                            <div class="skill-percent">65%</div>
+                                        </div>
+                                    </div>
+                                    <div class="skill-item padd-15">
+                                        <h5>Html</h5>
+                                        <div class="progress">
+                                            <div class="progress-in" style="width: 75%;"></div>
+                                            <div class="skill-percent">75%</div>
+                                        </div>
+                                    </div>
+                                    <div class="skill-item padd-15">
+                                        <h5>CSS</h5>
+                                        <div class="progress">
+                                            <div class="progress-in" style="width: 70%;"></div>
+                                            <div class="skill-percent">70%</div>
+                                        </div>
+                                    </div>
+                                    <div class="skill-item padd-15">
+                                        <h5>Docker</h5>
+                                        <div class="progress">
+                                            <div class="progress-in" style="width: 70%;"></div>
+                                            <div class="skill-percent">70%</div>
+                                        </div>
+                                    </div>
+                                    <div class="skill-item padd-15">
+                                        <h5>Git</h5>
+                                        <div class="progress">
+                                            <div class="progress-in" style="width: 80%;"></div>
+                                            <div class="skill-percent">80%</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="education padd-15">
+                                <h3 class="title">Education</h3>
+                                <div class="row">
+                                    <div class="timeline-box padd-15">
+                                        <div class="timeline shadow-dark">
+                                            <!-- ===== timeline item ===== -->
+                                            <div class="timeline-item">
+                                                <div class="circle-dot"></div>
+                                                <h3 class="timeline-date">
+                                                    <i class="fa fa-calendar"></i> 2019 - 2023
+                                                </h3>
+                                                <h4 class="timeline-title">College Studing</h4>
+                                                <p class="timeline-text">It all started in college. I studied there for
+                                                    4 years, learned the basics of programming, learned the basis of
+                                                    several languages such as C++, C#, PHP and many more...</p>
+                                            </div>
+                                            <!-- ===== timeline item ===== -->
+                                            <div class="timeline-item">
+                                                <div class="circle-dot"></div>
+                                                <h3 class="timeline-date">
+                                                    <i class="fa fa-calendar"></i> 2023 - 2024
+                                                </h3>
+                                                <h4 class="timeline-title">Python studing</h4>
+                                                <p class="timeline-text">When I got my degree. I thought that my
+                                                    knowledge was not enough to be a good programmer. So I decided to
+                                                    learn Python, because thanks to the surge in popularity of AI, it
+                                                    seemed to me the most ambitious and at the same time simple. But
+                                                    since my PC was too weak and I was not indifferent to WEB
+                                                    development, I decided to start with it. After learning the basics
+                                                    of the language, writing a lot of pet-projects and getting to know
+                                                    Django, I realized that I was ready.</p>
+
+                                            </div>
+                                            <!-- ===== timeline item ===== -->
+                                            <div class="timeline-item">
+                                                <div class="circle-dot"></div>
+                                                <h3 class="timeline-date">
+                                                    <i class="fa fa-calendar"></i> 2024 - ...
+                                                </h3>
+                                                <h4 class="timeline-title">Practice and Work</h4>
+                                                <p class="timeline-text">I've been freelancing. I wrote telegram bots to
+                                                    order, added functionality to websites, as well as developed them
+                                                    from scratch, wrote diplomas for students. But after a while I felt
+                                                    like I was standing still and I wanted to find a permanent job where
+                                                    I could continue to improve my skills, be useful and donate more to
+                                                    Sternenko's drones.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="experience padd-15">
+                                <h3 class="title">Experience</h3>
+                                <div class="row">
+                                    <div class="timeline-box padd-15">
+                                        <div class="timeline shadow-dark">
+                                            <!-- ===== timeline item ===== -->
+                                            <div class="timeline-item">
+                                                <div class="circle-dot"></div>
+                                                <h3 class="timeline-date">
+                                                    <i class="fa fa-calendar"></i> 2023 - 2024
+                                                </h3>
+                                                <h4 class="timeline-title">Telegram Bots</h4>
+                                                <p class="timeline-text">Using the aiogram library, I have developed
+                                                    many telegram bots. Some of them combined several technologies at
+                                                    the same time, such as website parsing, emailing or desktop
+                                                    configuration.</p>
+
+                                            </div>
+                                            <!-- ===== timeline item ===== -->
+                                            <div class="timeline-item">
+                                                <div class="circle-dot"></div>
+                                                <h3 class="timeline-date">
+                                                    <i class="fa fa-calendar"></i> 2023 - 2024
+                                                </h3>
+                                                <h4 class="timeline-title">Scripts</h4>
+                                                <p class="timeline-text">Also, I have experience with Python and PC
+                                                    interaction, thanks to which I have written several custom scripts.
+                                                    Some of them involved parsing websites, saving information to Excel,
+                                                    others were for simplifying keystrokes in Dota 2, reading
+                                                    information from the screen, etc.</p>
+
+                                            </div>
+                                            <!-- ===== timeline item ===== -->
+                                            <div class="timeline-item">
+                                                <div class="circle-dot"></div>
+                                                <h3 class="timeline-date">
+                                                    <i class="fa fa-calendar"></i> 2023 - 2024
+                                                </h3>
+                                                <h4 class="timeline-title">Sites</h4>
+                                                <p class="timeline-text">Using the Django library, I have learned and
+                                                    created several websites. Some were as pet projects and some were
+                                                    full-fledged applications. The site I'm proud of is a simplified
+                                                    cloud storage "Google Disk" on Git Hub that is used to store user
+                                                    information/notes and files. With the ability to share them with
+                                                    other users. The site supported authorization through third-party
+                                                    services and many other interesting things.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- ===== About Section End ===== -->
+        <!-- ===== Service Section Start ===== -->
+        <section class="service section" id="service">
+            <div class="container">
+                <div class="row">
+                    <div class="section-title padd-15">
+                        <h2>Services</h2>
+                    </div>
+                </div>
+                <div class="row">
+                    <!-- ===== Service item Start ===== -->
+                    <div class="service-item padd-15">
+                        <div class="service-item-inner">
+                            <div class="icon">
+                                <div class="fa fa-palette"></div>
+                            </div>
+                            <h4>Front-end</h4>
+                            <p>I have basic frontend skills: I can work with HTML, CSS and
+                                JavaScript to create simple user interfaces and integrate them with the Python backend.
+                                The main focus of my experience is on the server side, but I can also tweak and augment
+                                frontend code within a project.</p>
+
+                        </div>
+                    </div>
+                    <!-- ===== Service item End ===== -->
+                    <!-- ===== Service item Start ===== -->
+                    <div class="service-item padd-15">
+                        <div class="service-item-inner">
+                            <div class="icon">
+                                <div class="fa fa-laptop-code"></div>
+                            </div>
+                            <h4>Back-end</h4>
+                            <p>I have deep knowledge of Django, including building and
+                                configuring complex web applications, working with databases, developing REST APIs, and
+                                managing security and user authorization. My experience includes application performance
+                                optimization and integration with external services.</p>
+
+                        </div>
+                    </div>
+                    <!-- ===== Service item End ===== -->
+                    <!-- ===== Service item Start ===== -->
+                    <div class="service-item padd-15">
+                        <div class="service-item-inner">
+                            <div class="icon">
+                                <div class="fa fa-code"></div>
+                            </div>
+                            <h4>Scripts</h4>
+                            <p>I am proficient in writing scripts for task automation, data processing, and systems
+                                management. My experience includes creating efficient, scalable, and easily maintainable
+                                scripts for a variety of purposes, from web scraping to data analysis to API
+                                integration.</p>
+
+                        </div>
+                    </div>
+                    <!-- ===== Service item End ===== -->
+                    <!-- ===== Service item Start ===== -->
+                    <div class="service-item padd-15">
+                        <div class="service-item-inner">
+                            <div class="icon">
+                                <div class="fa fa-brands fa-telegram"></div>
+                            </div>
+                            <h4>Telegram Bots</h4>
+                            <p>I have experience in creating functional and scalable Telegram bots using the aiogram
+                                library, including command customization, message processing, integration with external
+                                APIs and state management. My bots are highly performant and flexible, allowing me to
+                                effectively automate various processes and interact with users.</p>
+
+                        </div>
+                    </div>
+                    <!-- ===== Service item End ===== -->
+                    <!-- ===== Service item Start ===== -->
+                    <div class="service-item padd-15">
+                        <div class="service-item-inner">
+                            <div class="icon">
+                                <div class="fa fa-solid fa-terminal"></div>
+                            </div>
+                            <h4>JS-scripts</h4>
+                            <p>I have a basic knowledge of JavaScript and can write simple scripts to improve web page
+                                interactivity, event handling and DOM interaction. My experience allows me to integrate
+                                JavaScript with backend services, ensuring a smooth frontend and backend experience.</p>
+
+                        </div>
+                    </div>
+                    <!-- ===== Service item End ===== -->
+                    <!-- ===== Service item Start ===== -->
+                    <div class="service-item padd-15">
+                        <div class="service-item-inner">
+                            <div class="icon">
+                                <div class="fa fa-brands fa-react"></div>
+                            </div>
+                            <h4 class="beta">React Basics</h4>
+                            <p>I have a basic knowledge of React and can build simple components and manage state in
+                                small applications. My experience includes integrating React with Python backend to
+                                develop interactive interfaces with efficient communication with the server side.</p>
+                        </div>
+                    </div>
+                    <!-- ===== Service item End ===== -->
+                </div>
+            </div>
+        </section>
+        <!-- ===== Service Section End ===== -->
+        <!-- ===== Portfolio Section Start ===== -->
+        <section class="portfolio section" id="portfolio">
+            <div class="container">
+                <div class="row">
+                    <div class="section-title padd-15">
+                        <h2>Portfolio</h2>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="portfolio-heading padd-15">
+                        <h2>My girlfriend's funny cat is here for now, but you can help me with this by hiring me. You can
+                            check out my portfolio on github below :</h2>
+                    </div>
+                </div>
+                <div class="row">
+                    <!-- ===== portfolio item Start ===== -->
+                    <div class="portfolio-item padd-15">
+                        <div class="portfolio-item-inner shadow-dark">
+                            <div class="portfolio-img">
+                                <img src="{% static 'vendor/source/img/cat-1.jpg' %}" alt="">
+                            </div>
+                        </div>
+                    </div>
+                    <!-- ===== portfolio item End ===== -->
+                    <!-- ===== portfolio item Start ===== -->
+                    <div class="portfolio-item padd-15">
+                        <div class="portfolio-item-inner shadow-dark">
+                            <div class="portfolio-img">
+                                <img src="{% static 'vendor/source/img/cat-2.jpg' %}" alt="">
+                            </div>
+                        </div>
+                    </div>
+                    <!-- ===== portfolio item End ===== -->
+                    <!-- ===== portfolio item Start ===== -->
+                    <div class="portfolio-item padd-15">
+                        <div class="portfolio-item-inner shadow-dark">
+                            <div class="portfolio-img">
+                                <img src="{% static 'vendor/source/img/cat-3.jpg' %}" alt="">
+                            </div>
+                        </div>
+                    </div>
+                    <!-- ===== portfolio item End ===== -->
+                    <!-- ===== portfolio item Start ===== -->
+                    <div class="portfolio-item padd-15">
+                        <div class="portfolio-item-inner shadow-dark">
+                            <div class="portfolio-img">
+                                <img src="{% static 'vendor/source/img/cat-4.jpg' %}" alt="">
+                            </div>
+                        </div>
+                    </div>
+                    <!-- ===== portfolio item End ===== -->
+                    <!-- ===== portfolio item Start ===== -->
+                    <div class="portfolio-item padd-15">
+                        <div class="portfolio-item-inner shadow-dark">
+                            <div class="portfolio-img">
+                                <img src="{% static 'vendor/source/img/cat-5.jpg' %}" alt="">
+                            </div>
+                        </div>
+                    </div>
+                    <!-- ===== portfolio item End ===== -->
+                    <!-- ===== portfolio item Start ===== -->
+                    <div class="portfolio-item padd-15">
+                        <div class="portfolio-item-inner shadow-dark">
+                            <div class="portfolio-img">
+                                <img src="{% static 'vendor/source/img/cat-6.jpg' %}" alt="">
+                            </div>
+                        </div>
+                    </div>
+                    <!-- ===== portfolio item End ===== -->
+                </div>
+            </div>
+        </section>
+        <!-- ===== Portfolio Section End ===== -->
+        <!-- ===== Contact Section Start ===== -->
+        <section class="contact section" id="contact">
+            <div class="container">
+                <div class="row">
+                    <div class="section-title padd-15">
+                        <h2>Contact Me</h2>
+                    </div>
+                </div>
+                <h3 class="contact-title padd-15">Have You Any Questions ?</h3>
+                <h4 class="contact-sub-title padd-15">I'M AT YOUR SERVICES</h4>
+                <div class="row">
+                    <!-- ===== Contact info item Start ===== -->
+                    <div class="contact-info-item padd-15">
+                        <div class="icon">
+                            <div class="fa fa-phone"></div>
+                        </div>
+                        <h4>Call Me On</h4>
+                        <p>+380 96 024 6255</p>
+                    </div>
+                    <!-- ===== Contact info item End ===== -->
+                    <!-- ===== Contact info item Start ===== -->
+                    <div class="contact-info-item padd-15">
+                        <div class="icon">
+                            <div class="fa fa-brands fa-telegram"></div>
+                        </div>
+                        <h4>Telegram</h4>
+                        <a href="https://t.me/saw_TheMoon"><p>@saw_TheMoon</p></a>
+                    </div>
+                    <!-- ===== Contact info item End ===== -->
+                    <!-- ===== Contact info item Start ===== -->
+                    <div class="contact-info-item padd-15">
+                        <div class="icon">
+                            <div class="fa fa-brands fa-github"></div>
+                        </div>
+                        <h4>Github</h4>
+                        <a href="https://github.com/MilphHunter"><p>MilphHunter</p></a>
+                    </div>
+                    <!-- ===== Contact info item End ===== -->
+                    <!-- ===== Contact info item Start ===== -->
+                    <div class="contact-info-item padd-15">
+                        <div class="icon">
+                            <div class="fa fa-envelope"></div>
+                        </div>
+                        <h4>Email</h4>
+                        <p>dkomarov4444@gmail.com</p>
+                    </div>
+                    <!-- ===== Contact info item End ===== -->
+                </div>
+                <h3 class="contact-title padd-15">SEND ME AN EMAIL</h3>
+                <h4 class="contact-sub-title padd-15" id="message">I'M VERY RESPONSIVE TO MESSAGES</h4>
+                <!-- ===== Contact Form Start ===== -->
+                <div class="row">
+                    <div class="contact-form padd-15">
+                        <form id="sendMailForm" method="post">
+                            {% csrf_token %}
+                            <div class="row">
+                                <div class="form-item col-6 padd-15">
+                                    <div class="form-group">
+                                        {{ email_form.email_name }}
+                                    </div>
+                                </div>
+                                <div class="form-item col-6 padd-15">
+                                    <div class="form-group">
+                                        {{ email_form.email_email }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-item col-12 padd-15">
+                                    <div class="form-group">
+                                        {{ email_form.email_subject }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-item col-12 padd-15">
+                                    <div class="form-group">
+                                        {{ email_form.email_text }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-item col-12 padd-15">
+                                    <div class="form-group">
+                                        <button type="submit" class="btn">Sent Message</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <!-- ===== Contact Form End ===== -->
+            </div>
+        </section>
+        <!-- ===== Contact Section End ===== -->
+    </div>
+    <!-- ===== Main Content End ===== -->
+</div>
+<!-- ===== Main Container End ===== -->
+<!-- ===== Style Switcher Start ===== -->
+<div class="style-switcher">
+    <div class="style-switcher-toggler s-icon">
+        <i class="fas fa-cog fa-spin"></i>
+    </div>
+    <div class="day-night s-icon">
+        <i class="fas"></i>
+    </div>
+    <h4>Theme Colors</h4>
+    <div class="colors">
+        <span class="color-1 style-switcher-button" data-style="color-1"></span>
+        <span class="color-2 style-switcher-button" data-style="color-2"></span>
+        <span class="color-3 style-switcher-button" data-style="color-3"></span>
+        <span class="color-4 style-switcher-button" data-style="color-4"></span>
+        <span class="color-5 style-switcher-button" data-style="color-5"></span>
+    </div>
+</div>
+<!-- ===== Style Switcher End ===== -->
+<!-- ===== JS Files ===== -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="{% static 'vendor/js/scripts.js' %}"></script>
+<script src="{% static 'vendor/js/styleSwitcher.js' %}"></script>
+<script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+</body>
+
+</html>

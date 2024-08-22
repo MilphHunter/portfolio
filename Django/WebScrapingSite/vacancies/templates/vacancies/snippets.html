@@ -1,0 +1,122 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <title>Snippet - BBBootstrap</title>
+    <link href='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css' rel='stylesheet'>
+    <link href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.css' rel='stylesheet'>
+    <link rel="stylesheet" href="{% static 'vendor/css/style.css' %}">
+    <script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+    <script src="{% static 'vendor/js/main.js' %}" defer></script>
+</head>
+
+<body class='snippet-body'>
+<div class="fixed-elements">
+    <p class="fixed-elements-text" data-path="#freelancer" onclick="scrollToElement(this.getAttribute('data-path'))">1.
+        Freelancer.com</p>
+    <p class="fixed-elements-text" data-path="#upwork" onclick="scrollToElement(this.getAttribute('data-path'))">2.
+        Upwork.com</p>
+    <p class="fixed-elements-text" data-path="#hunt" onclick="scrollToElement(this.getAttribute('data-path'))">3.
+        FreelanceHunt.com</p>
+</div>
+
+<div class="container py-5">
+    <div class="row text-center text-white mb-5">
+        <div class="col-lg-7 mx-auto">
+            <h1 class="display-4" id="freelancer">Freelancer.com:</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <ul class="list-group shadow">
+                {% for job in freelancer %}
+                    <li class="list-group-item">
+                        <div class="media align-items-lg-center flex-column flex-lg-row p-3">
+                            <div class="media-body order-2 order-lg-1">
+                                <h5 class="mt-0 font-weight-bold mb-2 text-header"><a
+                                        href="{{ job.url }}">{{ job.title }}</a></h5>
+                                <p class="font-weight-bold mb-2 small">{{ job.days_left }};
+                                    {% if job.isVerify == 'True' %}User is verify;{% else %}User isn't
+                                        verify;{% endif %}
+                                </p>
+                                <p class="font-italic text-muted mb-2 small">{{ job.description }}</p>
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <p class="font-weight-bold tags">Tags: {{ job.tags }}</p>
+                                    <p class="font-weight-bold tags">Applicants: {{ job.applicants }}</p>
+                                    <p class="font-weight-bold price">Price: {{ job.price }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="container py-5">
+    <div class="row text-center text-white mb-5">
+        <div class="col-lg-7 mx-auto">
+            <h1 class="display-4" id="upwork">Upwork.com:</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <ul class="list-group shadow">
+                {% for job in upwork %}
+                    <li class="list-group-item">
+                        <div class="media align-items-lg-center flex-column flex-lg-row p-3">
+                            <div class="media-body order-2 order-lg-1">
+                                <h5 class="mt-0 font-weight-bold mb-2 text-header"><a href="{{ job.url }}">{{ job.title }}</a></h5>
+                                <p class="font-weight-bold mb-2 small">{{ job.posted }}</p>
+                                <p class="font-italic text-muted mb-2 small">{{ job.description }}</p>
+                                <p class="font-weight-bold tags"><span class="price">{{ job.typeOfJob }}</span>, {{ job.expNeeded }}, {{ job.duration }}</p>
+                                <p class="font-weight-bold tags">{{ job.tags }}</p>
+                            </div>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="container py-5">
+    <div class="row text-center text-white mb-5">
+        <div class="col-lg-7 mx-auto">
+            <h1 class="display-4" id="hunt">FreelanceHunt.com:</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <ul class="list-group shadow">
+                {% for job in freelanceHunt %}
+                <li class="list-group-item">
+                    <div class="media align-items-lg-center flex-column flex-lg-row p-3">
+                        <div class="media-body order-2 order-lg-1">
+                            <h5 class="mt-0 font-weight-bold mb-2 text-header"><a href="{{ job.url }}">{{ job.title }}</a></h5>
+                            <p class="font-weight-bold mb-2 small">{{ job.posted }}</p>
+                            <p class="font-italic text-muted mb-2 small">{{ job.description }}</p>
+                            <div class="d-flex align-items-center justify-content-between">
+                                <p class="font-weight-bold tags">Tags: {{ job.tags }}</p>
+                                <p class="font-weight-bold tags">Applicants: {{ job.applicants }}</p>
+                                <p class="font-weight-bold price">Price: {% if job.cash %}{{ job.cash }}{% else %}?{% endif %}</p>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
+<script type='text/javascript'
+        src='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js'></script>
+<script type='text/javascript'>const myLink = document.querySelector('a[href="#"]');
+myLink.addEventListener('click', function (e) {
+    e.preventDefault();
+});</script>
+</body>
+
+</html>

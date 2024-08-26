@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="stylesheet" href="{% static 'vendor/css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'vendor/css/style1.css' %}">
     <link rel="stylesheet" href="{% static 'vendor/css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static 'vendor/css/offcanvas.css' %}">
     <link rel="stylesheet" href="{% static 'vendor/css/dropdowns.css' %}">
@@ -25,7 +25,7 @@
 <nav class="nav-padding navbar navbar-expand-lg fixed-top navbar-dark bg-dark" aria-label="Main navigation">
     <div class="container-fluid">
         <a class="navbar-brand" href="#" id="toggle-sidebar">
-            <img src="{% static 'vendor/img/icon/note.png' %}" class="icon" alt="icon">
+            <img src="{% static 'vendor/content/img/note.png' %}" class="icon" alt="icon" style="margin-right: 20px">
             Мій нотатник</a>
         <button class="navbar-toggler p-0 border-0" type="button" id="navbarSideCollapse"
                 aria-label="Toggle navigation">
@@ -62,7 +62,7 @@
 
 {% endblock %}
 <!-- Sidebar -->
-<div class="d-flex flex-column flex-shrink-0 p-3 text-bg-dark sidebar" style="width: 280px;">
+<div class="d-flex flex-column flex-shrink-0 p-3 text-bg-dark sidebar">
     <a href="/static" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
         <span class="fs-4">Sidebar</span>
     </a>
@@ -70,48 +70,48 @@
     <ul class="nav nav-pills flex-column mb-auto">
         <li class="nav-item">
             <a href="" class="nav-link active" aria-current="page" id="scrollToTopBtn">
-                <img src="{% static 'vendor/img/icon/tag.png' %}" class="sidebar__img me-2" alt="tag-icon">
+                <img src="{% static 'vendor/content/img/tag.png' %}" class="sidebar__img me-2" alt="tag-icon">
                 <span class="sidebar__tagName">Теги</span>
             </a>
         </li>
         <li class="nav-item">
             <a href="{% url 'workspace:allFolders' %}" class="nav-link text-white">
-                <img src="{% static 'vendor/img/icon/folder.png' %}" class="sidebar__img me-2" alt="folder-icon">
+                <img src="{% static 'vendor/content/img/folder.png' %}" class="sidebar__img me-2" alt="folder-icon">
                 <span class="sidebar__tagName">Папки</span>
             </a>
         </li>
         <li class="nav-item">
             <a href="{% url 'workspace:allNotes' %}" class="nav-link text-white">
-                <img src="{% static 'vendor/img/icon/documents.png' %}" class="sidebar__img me-2" alt="documents-icon">
+                <img src="{% static 'vendor/content/img/document.png' %}" class="sidebar__img me-2" alt="documents-icon">
                 <span class="sidebar__tagName">Записи</span>
             </a>
         </li>
         <li class="nav-item">
             <a href="#footer-section" class="nav-link text-white">
-                <img src="{% static 'vendor/img/icon/callback.png' %}" class="sidebar__img me-2" alt="callback-icon">
+                <img src="{% static 'vendor/content/img/sms.png' %}" class="sidebar__img me-2" alt="callback-icon">
                 <span class="sidebar__tagName">Зв'язок зі мною</span>
             </a>
         </li>
 
         <li class="add-butns nav-item">
             <a id="createTagBtn" href="{% url 'workspace:index' %}" class="nav-link text-white">
-                <img src="{% static 'vendor/img/icon/add-white.png' %}"
+                <img src="{% static 'vendor/content/img/add-white.png' %}"
                      class="sidebar__img me-2" alt="add-icon">
-                <span class="sidebar__tagName">Створити тег →</span>
+                <span class="sidebar__tagName">Створити тег</span>
             </a>
         </li>
         <li id="createFolderBtn" class="nav-item">
             <a href="#" class="nav-link text-white">
-                <img src="{% static 'vendor/img/icon/add-white.png' %}" class="sidebar__img me-2" alt="add-icon">
-                <span class="sidebar__tagName">Створити папку →</span>
+                <img src="{% static 'vendor/content/img/add-white.png' %}" class="sidebar__img me-2" alt="add-icon">
+                <span class="sidebar__tagName">Створити папку</span>
             </a>
         </li>
         <li class="nav-item">
             <form method="post" action="{% url 'workspace:index' %}">
                 {% csrf_token %}
                 <button type="submit" class="nav-link text-white" name="clear_template_data">
-                    <img src="{% static 'vendor/img/icon/add-white.png' %}" class="sidebar__img me-2" alt="add-icon">
-                    <span class="sidebar__tagName">Створити запис →</span></button>
+                    <img src="{% static 'vendor/content/img/add-white.png' %}" class="sidebar__img me-2" alt="add-icon">
+                    <span class="sidebar__tagName">Створити запис</span></button>
             </form>
         </li>
     </ul>
@@ -191,20 +191,19 @@
                             <div class="d-flex justify-content-center mb-4">
                                 <img id="selectedImage"
                                      src="{% if form_folder.folder_img.value %}{{ form_folder.folder_img.value }}
-                    {% else %}{% static 'vendor/img/folder-black.png' %}{% endif %}"
+                    {% else %}{% static 'vendor/content/img/folder-black.png' %}{% endif %}"
                                      alt="Selected Image"
                                      style="max-width: 200px; max-height: 200px; object-fit: contain;">
                             </div>
                             <div class="d-flex justify-content-center">
                                 <div class="btn btn-primary btn-rounded">
                                     <label class="form-label text-white m-1"
-                                           for="{{ form_folder.folder_img.id_for_label }}">Вибрати
+                                           for="{{ form_folder.folder_img.id_for_label }}">Обрати
                                         зображення</label>
                                     {{ form_folder.folder_img }}
                                 </div>
                             </div>
                         </div>
-                        <!-- Name Input -->
                         <div class="form-floating mb-3">
                             {{ form_folder.folder_name }}
                             <label for="{{ form_folder.folder_name.id_for_label }}">Назва папки:</label>
@@ -235,7 +234,7 @@
 
                                 reader.readAsDataURL(input.files[0]);
                             } else {
-                                img.src = "{% static 'vendor/img/folder-black.png' %}";
+                                img.src = "{% static 'vendor/content/img/folder-black.png' %}";
                             }
                         }
                     </script>
@@ -287,19 +286,19 @@
         <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
             <div class="col-md-4 d-flex align-items-center">
                 <a href="/static" class="mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1">
-                    <img class="footer-icon" src="{% static 'vendor/img/icon/note-black.png' %}" alt="413">
+                    <img class="footer-icon" src="{% static 'vendor/content/img/note-black.png' %}" alt="413">
                 </a>
                 <span class="mb-3 mb-md-0 text-muted">&copy; 2023 MyPythonProject, Inc</span>
             </div>
 
             <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
-                <li><a href="#"><img
-                        src="{% static 'vendor/img/icon/telegram.png' %}" class="composition__img">
+                <li><a href="https://t.me/saw_TheMoon"><img
+                        src="{% static 'vendor/content/img/telegram.png' %}" class="composition__img">
                 </a></li>
-                <li><a href="#"><img src="{% static 'vendor/img/icon/gmail.png' %}" class="composition__img">
+                <li><a href="#"><img src="{% static 'vendor/content/img/inst.png' %}" class="composition__img">
                 </a></li>
-                <li><a href="#"><img src="{% static 'vendor/img/icon/instagram.png' %}"
-                                     class="composition__img composition__img_instagram">
+                <li><a href="https://github.com/MilphHunter"><img src="{% static 'vendor/content/img/github.png' %}"
+                                     class="composition__img composition__img">
                 </a></li>
             </ul>
         </footer>

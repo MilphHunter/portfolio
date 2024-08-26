@@ -7,7 +7,7 @@ from text_unidecode import unidecode
 
 class UserTag(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    tag_name = models.CharField(max_length=30, default='Tag')
+    tag_name = models.CharField(max_length=100, default='Tag')
     tag_slug = models.SlugField(max_length=200, blank=True)
     tag_count = models.IntegerField(default=0)
     created = models.DateField(auto_now_add=True)
@@ -20,7 +20,7 @@ class UserTag(models.Model):
 
 class Folder(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    folder_name = models.CharField(max_length=30)
+    folder_name = models.CharField(max_length=100)
     folder_slug = models.SlugField(max_length=200, blank=True)
     folder_description = models.CharField(max_length=30, default='', blank=True)
     created = models.DateField(auto_now_add=True)

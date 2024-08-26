@@ -6,7 +6,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="{% static 'vendor/css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'vendor/css/style1.css' %}">
     <link rel="stylesheet" href="{% static 'vendor/css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static 'vendor/css/offcanvas.css' %}">
     <link rel="stylesheet" href="{% static 'vendor/css/dropdowns.css' %}">
@@ -27,42 +27,41 @@
 <form class="bg-light">
     <!-- Navigation bar -->
     <nav class="nav-padding navbar navbar-expand-lg fixed-top navbar-dark bg-dark" aria-label="Main navigation">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#" id="toggle-sidebar">
-                <img src="{% static 'vendor/img/icon/note.png' %}" class="icon">
-                Мій нотатник</a>
-            <button class="navbar-toggler p-0 border-0" type="button" id="navbarSideCollapse"
-                    aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#" id="toggle-sidebar">
+            <img src="{% static 'vendor/content/img/note.png' %}" class="icon" alt="icon" style="margin-right: 20px">
+            Мій нотатник</a>
+        <button class="navbar-toggler p-0 border-0" type="button" id="navbarSideCollapse"
+                aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
-            <div class="navbar-collapse offcanvas-collapse" id="navbarsExampleDefault">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a href="{% url 'workspace:index' %}" class="nav-link active"
-                           aria-current="page">Головна</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" id="createPassBtn">Сейф</a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown"
-                           aria-expanded="false">Додати</a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" id="createTagBtn1" href="#">Тег</a></li>
-                            <li><a class="dropdown-item" id="createFolderBtn1" href="#">Папку</a></li>
-                            <li><a class="dropdown-item" href="#">Запис</a></li>
-                        </ul>
-                    </li>
-                </ul>
-                <form class="d-flex" role="search">
-                    <input class="form-control me-2" style="width: 17rem !important;" type="search"
-                           placeholder="Знайти..." aria-label="Search">
-                    <button class="btn btn-outline-warning" type="submit">Пошук</button>
-                </form>
-            </div>
+        <div class="navbar-collapse offcanvas-collapse" id="navbarsExampleDefault">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a href="{% url 'workspace:index' %}" class="nav-link active" aria-current="page">Головна</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="createPassBtn">Сейф</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown"
+                       aria-expanded="false">Додати</a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" id="createTagBtn1" href="#">Тег</a></li>
+                        <li><a class="dropdown-item" id="createFolderBtn1" href="#">Папку</a></li>
+                        <li><a class="dropdown-item" href="#">Запис</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <form class="d-flex" method="get" action="{% url 'workspace:findNotes' %}">
+                {% csrf_token %}
+                {{ search_form.query }}
+                <button class="btn btn-outline-warning" type="submit"  style="visibility: hidden">Пошук</button>
+            </form>
         </div>
-    </nav>
+    </div>
+</nav>
     <!-- Tag bar -->
     <div id="tag-section" class="nav-scroller bg-body shadow-sm">
         <nav class="nav nav-tag" aria-label="Secondary navigation">
@@ -92,86 +91,80 @@
         };
     </script>
     <!-- Sidebar -->
-    <div class="d-flex flex-column flex-shrink-0 p-3 text-bg-dark sidebar" style="width: 280px;">
-        <a href="/static" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
-            <svg class="bi pe-none me-2" width="40" height="32">
-                <use xlink:href="#bootstrap"/>
-            </svg>
-            <span class="fs-4">Sidebar</span>
-        </a>
-        <hr>
-        <ul class="nav nav-pills flex-column mb-auto">
-            <li class="nav-item">
-                <a href="" class="nav-link active" aria-current="page" id="scrollToTopBtn">
-                    <img src="../../../../static/vendor/img/icon/tag.png"
-                         class="sidebar__img me-2">
-                    <span class="sidebar__tagName">Теги</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="../../../../userMainWorkspace/templates/workspaces/workspace/workspace.html#folder-section"
-                   class="nav-link text-white">
-                    <img src="../../../../static/vendor/img/icon/folder.png"
-                         class="sidebar__img me-2">
-                    <span class="sidebar__tagName">Папки</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="../../../../userMainWorkspace/templates/workspaces/workspace/workspace.html#notes-section"
-                   class="nav-link text-white">
-                    <img src="../../../../static/vendor/img/icon/documents.png"
-                         class="sidebar__img me-2">
-                    <span class="sidebar__tagName">Записи</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="#footer-section" class="nav-link text-white">
-                    <img src="../../../../static/vendor/img/icon/callback.png"
-                         class="sidebar__img me-2">
-                    <span class="sidebar__tagName">Зв'язок зі мною</span>
-                </a>
-            </li>
-
-
-            <li class="add-butns nav-item">
-                <a id="createTagBtn" href="#" class="nav-link text-white">
-                    <img src="../../../../static/vendor/img/icon/add-white.png"
-                         class="sidebar__img me-2">
-                    <span class="sidebar__tagName">Створити тег →</span>
-                </a>
-            </li>
-            <li id="createFolderBtn" class="nav-item">
-                <a href="#" class="nav-link text-white">
-                    <img src="../../../../static/vendor/img/icon/add-white.png"
-                         class="sidebar__img me-2">
-                    <span class="sidebar__tagName">Створити папку →</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="../../../userNote/templates/noteCreate.html" class="nav-link text-white">
-                    <img src="../../../../static/vendor/img/icon/add-white.png"
-                         class="sidebar__img me-2">
-                    <span class="sidebar__tagName">Створити запис →</span>
-                </a>
-            </li>
-        </ul>
-        <hr>
-        <div class="dropdown">
-            <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
-               data-bs-toggle="dropdown" aria-expanded="false">
-                <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
-                <strong>Username</strong>
+    <div class="d-flex flex-column flex-shrink-0 p-3 text-bg-dark sidebar">
+    <a href="/static" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+        <span class="fs-4">Sidebar</span>
+    </a>
+    <hr>
+    <ul class="nav nav-pills flex-column mb-auto">
+        <li class="nav-item">
+            <a href="" class="nav-link active" aria-current="page" id="scrollToTopBtn">
+                <img src="{% static 'vendor/content/img/tag.png' %}" class="sidebar__img me-2" alt="tag-icon">
+                <span class="sidebar__tagName">Теги</span>
             </a>
+        </li>
+        <li class="nav-item">
+            <a href="{% url 'workspace:allFolders' %}" class="nav-link text-white">
+                <img src="{% static 'vendor/content/img/folder.png' %}" class="sidebar__img me-2" alt="folder-icon">
+                <span class="sidebar__tagName">Папки</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="{% url 'workspace:allNotes' %}" class="nav-link text-white">
+                <img src="{% static 'vendor/content/img/document.png' %}" class="sidebar__img me-2" alt="documents-icon">
+                <span class="sidebar__tagName">Записи</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="#footer-section" class="nav-link text-white">
+                <img src="{% static 'vendor/content/img/sms.png' %}" class="sidebar__img me-2" alt="callback-icon">
+                <span class="sidebar__tagName">Зв'язок зі мною</span>
+            </a>
+        </li>
+
+        <li class="add-butns nav-item">
+            <a id="createTagBtn" href="{% url 'workspace:index' %}" class="nav-link text-white">
+                <img src="{% static 'vendor/content/img/add-white.png' %}"
+                     class="sidebar__img me-2" alt="add-icon">
+                <span class="sidebar__tagName">Створити тег</span>
+            </a>
+        </li>
+        <li id="createFolderBtn" class="nav-item">
+            <a href="#" class="nav-link text-white">
+                <img src="{% static 'vendor/content/img/add-white.png' %}" class="sidebar__img me-2" alt="add-icon">
+                <span class="sidebar__tagName">Створити папку</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <form method="post" action="{% url 'workspace:index' %}">
+                {% csrf_token %}
+                <button type="submit" class="nav-link text-white" name="clear_template_data">
+                    <img src="{% static 'vendor/content/img/add-white.png' %}" class="sidebar__img me-2" alt="add-icon">
+                    <span class="sidebar__tagName">Створити запис</span></button>
+            </form>
+        </li>
+    </ul>
+    <hr>
+    <div class="dropdown">
+        <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
+           data-bs-toggle="dropdown" aria-expanded="false">
+            <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
+            <strong>Username</strong>
+        </a>
+        <form method="post" action="{% url 'account:logout' %}">
+            {% csrf_token %}
             <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
-                <li><a class="dropdown-item" href="../../../userNote/templates/noteCreate.html">Створити запис</a></li>
-                <li><a class="dropdown-item" href="#">Забув код</a></li>
+                <li><a class="dropdown-item" href="../../../myzametka/templates/noteCreate.html">Створити запис</a></li>
                 <li>
                     <hr class="dropdown-divider">
                 </li>
-                <li><a class="dropdown-item" href="#">Вийти</a></li>
+                <li>
+                    <button class="dropdown-item" type="submit">Выход</button>
+                </li>
             </ul>
-        </div>
+        </form>
     </div>
+</div>
 {% block mainBlock %}
 
 {% endblock %}
@@ -221,7 +214,7 @@
                             <div class="mb-3">
                                 <div class="d-flex justify-content-center mb-4">
                                     <img id="selectedAvatar"
-                                         src="../../../../static/vendor/img/icon/folder-black.png"
+                                         src="{% static 'vendor/content/img/folder-black.png' %}"
                                          class="rounded-circle"
                                          style="width: 200px; height: 200px; object-fit: cover;"
                                          alt="example placeholder"/>
@@ -303,23 +296,19 @@
         <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
             <div class="col-md-4 d-flex align-items-center">
                 <a href="/static" class="mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1">
-                    <img class="footer-icon"
-                         src="../../../../static/vendor/img/icon/note-black.png">
+                    <img class="footer-icon" src="{% static 'vendor/content/img/note-black.png' %}" alt="413">
                 </a>
                 <span class="mb-3 mb-md-0 text-muted">&copy; 2023 MyPythonProject, Inc</span>
             </div>
 
             <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
-                <li><a href="#"><img
-                        src="../../../../static/vendor/img/icon/telegram.png"
-                        class="composition__img">
+                <li><a href="https://t.me/saw_TheMoon"><img
+                        src="{% static 'vendor/content/img/telegram.png' %}" class="composition__img">
                 </a></li>
-                <li><a href="#"><img src="../../../../static/vendor/img/icon/gmail.png"
-                                     class="composition__img">
+                <li><a href="#"><img src="{% static 'vendor/content/img/inst.png' %}" class="composition__img">
                 </a></li>
-                <li><a href="#"><img
-                        src="../../../../static/vendor/img/icon/instagram.png"
-                        class="composition__img composition__img_instagram">
+                <li><a href="https://github.com/MilphHunter"><img src="{% static 'vendor/content/img/github.png' %}"
+                                     class="composition__img composition__img">
                 </a></li>
             </ul>
         </footer>

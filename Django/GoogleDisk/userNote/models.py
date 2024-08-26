@@ -11,7 +11,7 @@ from userMainWorkspace.models import Folder, UserTag
 
 class UserNote(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    note_name = models.CharField(max_length=50, default='Моя думка')
+    note_name = models.CharField(max_length=150, default='Моя думка')
     note_content = models.TextField(blank=True, default='')
     note_file = models.JSONField(default=dict, blank=True)
     note_folder = models.ManyToManyField(Folder, blank=True)

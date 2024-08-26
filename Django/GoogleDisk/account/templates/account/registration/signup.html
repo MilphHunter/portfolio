@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- STYLE CSS -->
-    <link rel="stylesheet" href="{% static 'vendor/css/style_login1.css' %}">
+    <link rel="stylesheet" href="{% static 'vendor/css/style_login3.css' %}">
 
 </head>
 
@@ -16,7 +16,7 @@
 <div class="wrapper">
     <div class="inner">
         <div class="image-holder">
-            <img src="{% static 'vendor/img/poet.png' %}" alt="">
+            <img src="{% static 'vendor/content/img/contract.png' %}" alt="">
         </div>
         <form method="post" action="">
             {% csrf_token %}
@@ -50,7 +50,7 @@
             <div class="form-login">
                 <input type="submit" class="myinput" value="Підтвердити">
             </div>
-            <div class="myTextCenter">
+            <div class="myTextCenter" style="margin-bottom: 25px;">
                 <p>Уже маєте акаунт? <a href="{% url 'account:login' %}">Логін</a></p>
             </div>
             <script>

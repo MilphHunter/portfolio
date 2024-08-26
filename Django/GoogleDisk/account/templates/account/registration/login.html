@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- STYLE CSS -->
-    <link rel="stylesheet" href="{% static 'vendor/css/style_login1.css' %}">
+    <link rel="stylesheet" href="{% static 'vendor/css/style_login3.css' %}">
 
 </head>
 
@@ -18,7 +18,7 @@
 <div class="wrapper">
     <div class="inner">
         <div class="image-holder">
-            <img src="{% static 'vendor/img/poet.png' %}" alt="poet-img">
+            <img src="{% static 'vendor/content/img/contract.png' %}" alt="poet-img" class="login-img">
         </div>
         <form method="post" action="{% url 'account:login' %}">
             {% csrf_token %}
@@ -42,15 +42,15 @@
             <div class="form-login ml-30">
                 <p>Ще немає акаунту? <a href="{% url 'account:register' %}">Зареєструватсь</a></p>
             </div>
-            <ul class="">
-                <li><a href="#"><img src="{% static 'vendor/img/icon/registration_google.png' %}"
+            <ul style="margin-left: 65px">
+                <li><a href="#"><img src="{% static 'vendor/content/img/google.png' %}"
                                      class="composition__img">
                 </a></li>
-                <li><a href="#"><img src="{% static 'vendor/img/icon/registration_facebook.png' %}"
+                <li><a href="#"><img src="{% static 'vendor/content/img/facebook.png' %}"
                                      class="composition__img">
                 </a></li>
-                <li><a href="#"><img src="{% static 'vendor/img/icon/registration_reddit.png' %}"
-                                     class="composition__img composition_reddit">
+                <li><a href="#"><img src="{% static 'vendor/content/img/reddit.png' %}"
+                                     class="composition__img">
                 </a></li>
             </ul>
         </form>

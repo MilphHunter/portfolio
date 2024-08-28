@@ -22,7 +22,7 @@ class Folder(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     folder_name = models.CharField(max_length=100)
     folder_slug = models.SlugField(max_length=200, blank=True)
-    folder_description = models.CharField(max_length=30, default='', blank=True)
+    folder_description = models.CharField(max_length=300, default='', blank=True)
     created = models.DateField(auto_now_add=True)
     folder_img = models.ImageField(upload_to='img/folder_img/', default='img/folder_img/folder-black.png', blank=True)
     is_pinned = models.BooleanField(default=False)

@@ -33,7 +33,7 @@ class Migration(migrations.Migration):
                 ('folder_slug', models.SlugField(blank=True, max_length=200)),
                 ('folder_description', models.CharField(blank=True, default='', max_length=30)),
                 ('created', models.DateField(auto_now_add=True)),
-                ('folder_img', models.ImageField(blank=True, default='img/folder_img/folder-black.png', upload_to='img/folder_img/')),
+                ('folder_img', models.ImageField(blank=True, default='static/vendor/content/folder-black.png', upload_to='img/folder_img/')),
                 ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
             ],
             options={

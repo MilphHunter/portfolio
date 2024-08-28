@@ -141,7 +141,7 @@ function updateAudioList(audio) {
         });
         control.className = 'audioplayer';
         let playBtn = document.createElement('img');
-        playBtn.src = "/static/vendor/img/icon/play-button.png";
+        playBtn.src = "/static/vendor/content/img/play-button.png";
         playBtn.className = 'pButton fas fa-play';
         playBtn.alt = 'playBtn';
         playBtn.addEventListener("click", function () {

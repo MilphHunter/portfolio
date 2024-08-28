@@ -270,5 +270,3 @@ def post_search(request):
                 search=search_query).order_by('-rank')
     return render(request, 'workspaces/workspace/find_notes.html',
                   {'search_form': search_form, 'tags': tags, 'query': query, 'notes': results})
-
-

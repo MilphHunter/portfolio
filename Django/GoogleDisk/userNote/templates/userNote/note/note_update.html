@@ -192,7 +192,7 @@
                                     <div class="bg-image hover-overlay ripple" data-mdb-ripple-color="light">
                                         <img class="card-img-top"
                                              src="{% if audio.note_audio_image %} {{ audio.note_audio_image }}
-                                                      {% else %} {% static 'vendor/img/icon/music_img.png' %} {% endif %}"
+                                                      {% else %} {% static 'vendor/content/img/music_img.png' %} {% endif %}"
                                              alt="Card image cap">
                                     </div>
                                     <div class="custom-controls">
@@ -208,7 +208,7 @@
                                         </audio>
                                         <div class="audioplayer">
                                             <a onclick="togglePlayPause(this)" class="audioplayer">
-                                                <img src="{% static 'vendor/img/icon/play-button.png' %}"
+                                                <img src="{% static 'vendor/content/img/play-button.png' %}"
                                                      class="pButton fas fa-play" alt="playBtn">
                                             </a>
                                             <div class="timeline" onclick="updateTime(this, event)">

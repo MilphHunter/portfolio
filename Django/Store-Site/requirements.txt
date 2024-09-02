@@ -10,3 +10,10 @@ redis==4.6.0
 celery==5.3.4
 
 psycopg2-binary==2.9.9
+
+django-environ
+django-allauth
+django-debug-toolbar
+django-extensions
+djangorestframework
+django-redis

@@ -1,2 +1,4 @@
 Django~=4.2
 Markdown~=3.5.2
+psycopg2
+django-taggit

@@ -19,9 +19,6 @@ env = environ.Env(
     SECRET_KEY=(str),
     DOMAIN_NAME=(str),
 
-    REDIS_HOST=(str),
-    REDIS_PORT=(str),
-
     DATABASE_NAME=(str),
     DATABASE_USER=(str),
     DATABASE_PASSWORD=(str),
@@ -123,34 +120,25 @@ INTERNAL_IPS = [
     'localhost',
 ]
 
-# Redis
+# Database
+# https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
-REDIS_HOST = env('REDIS_HOST')
-REDIS_PORT = env('REDIS_PORT')
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
+}
 
 # Caches
 
 CACHES = {
     'default': {
         'BACKEND': 'django_redis.cache.RedisCache',
-        'LOCATION': f'redis://{REDIS_HOST}:{REDIS_PORT}/1',
+        'LOCATION': f'redis://172.30.194.66:6379/1',  # замените <WSL_IP> на реальный IP
         'OPTIONS': {
             'CLIENT_CLASS': 'django_redis.client.DefaultClient',
         }
-    }
-}
-
-# Database
-# https://docs.djangoproject.com/en/4.0/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': env('DATABASE_NAME'),
-        'USER': env('DATABASE_USER'),
-        'PASSWORD': env('DATABASE_PASSWORD'),
-        'HOST': env('DATABASE_HOST'),
-        'PORT': env('DATABASE_PORT'),
     }
 }
 
@@ -237,15 +225,12 @@ SOCIALACCOUNT_PROVIDERS = {
     }
 }
 
-# Celery
-
-CELERY_BROKER_URL = f'redis://{REDIS_HOST}:{REDIS_PORT}'
-CELERY_RESULT_BACKEND = f'redis://{REDIS_HOST}:{REDIS_PORT}'
+# Celery (Optional - Redis-specific settings removed)
 
 # Stripe
 
-STRIPE_PUBLIC_KEY = env('STRIPE_PUBLIC_KEY')
-STRIPE_SECRET_KEY = env('STRIPE_SECRET_KEY')
+STRIPE_PUBLIC_KEY = 'pk_test_51O6X7wHsi7b8jFq7GY8IgKXtxHcQ2Oa232rNpVvJdKG9ByP4InSi0J9C7MpvlF00LgCovvqsoyxhRanmUHP5Lgtj00WPsZPxw5'
+STRIPE_SECRET_KEY = 'sk_test_51O6X7wHsi7b8jFq7TX6xu7jDbaJAhD2XT9UDZok06LBeBJLTj2nFhbVTVgDvC3zpQ07DrDkloQman78Q6d87P35j00SYi9Nsss'
 STRIPE_WEBHOOK_SECRET = env('STRIPE_WEBHOOK_SECRET')
 
 # Django REST framework

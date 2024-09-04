@@ -1,0 +1,7 @@
+Django
+django-crontab
+aiohttp
+bs4
+fake-useragent
+selenium
+redis

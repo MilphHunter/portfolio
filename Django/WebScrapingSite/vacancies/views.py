@@ -19,7 +19,6 @@ red = redis.Redis(
 
 def main_window(request):
     if request.method == "GET":
-        async_to_sync(update_bd_call)()
         freelancer = red.lrange("freelancer_com", 0, -1)
         upwork = red.lrange("upwork", 0, -1)
         freelanceHunt = red.lrange("freelance_hunt", 0, -1)
@@ -49,7 +48,6 @@ async def update_bd():
 
 
 def update_bd_call():
-    threading.Timer(0.5, update_bd).start()
     freelancer, upwork, freelanceHunt = asyncio.get_event_loop().run_until_complete(
         update_bd()
     )

@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink"
+    x="0" y="0" viewBox="0 0 24 24" role="img" preserveAspectRatio="xMidYMid slice"
+    focusable="false">
+    <g>
+        <path
+            d="M18 1.25H6A4.756 4.756 0 0 0 1.25 6v12A4.756 4.756 0 0 0 6 22.75h12A4.756 4.756 0 0 0 22.75 18V6A4.756 4.756 0 0 0 18 1.25zM6.75 14a.75.75 0 0 1-1.5 0v-4a.75.75 0 0 1 1.5 0zm3 2a.75.75 0 0 1-1.5 0V8a.75.75 0 0 1 1.5 0zm3 3a.75.75 0 0 1-1.5 0V5a.75.75 0 0 1 1.5 0zm3-4.5a.75.75 0 0 1-1.5 0v-5a.75.75 0 0 1 1.5 0zm3 2a.75.75 0 0 1-1.5 0v-9a.75.75 0 0 1 1.5 0z"
+            fill="#0d6efd" />
+    </g>
+</svg>

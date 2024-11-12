@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="en" data-bs-theme="auto">
+
+<head>
+    <script src="{{ url_for('static', path='/js/color-modes.js') }}"></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Workspace</title>
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/offcanvas-navbar/">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3">
+    <link href="{{ url_for('static', path='/assets/dist/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', path='/css/workspace.css') }}" rel="stylesheet">
+</head>
+
+<body class="bg-body-tertiary">
+<svg class="icon" style="display: none;">
+    <use xlink:href="{{ url_for('static', path='/assets/svg/theme.svg#check2') }}" id="check2"></use>
+    <use xlink:href="{{ url_for('static', path='/assets/svg/theme.svg#circle-half') }}" id="circle-half"></use>
+    <use xlink:href="{{ url_for('static', path='/assets/svg/theme.svg#moon-stars-fill') }}" id="moon-stars-fill"></use>
+    <use xlink:href="{{ url_for('static', path='/assets/svg/theme.svg#sun-fill') }}" id="sun-fill"></use>
+</svg>
+
+<div class="dropdown position-fixed bottom-0 end-0 mb-3 me-3 bd-mode-toggle">
+    <button class="btn btn-bd-primary py-2 dropdown-toggle d-flex align-items-center" id="bd-theme" type="button"
+            aria-expanded="false" data-bs-toggle="dropdown" aria-label="Toggle theme (auto)">
+        <svg class="bi my-1 theme-icon-active" width="1em" height="1em">
+            <use href="#circle-half"></use>
+        </svg>
+        <span class="visually-hidden" id="bd-theme-text">Toggle theme</span>
+    </button>
+    <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="bd-theme-text">
+        <li>
+            <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="light"
+                    aria-pressed="false">
+                <svg class="bi me-2 opacity-50" width="1em" height="1em">
+                    <use href="#sun-fill"></use>
+                </svg>
+                Light
+                <svg class="bi ms-auto d-none" width="1em" height="1em">
+                    <use href="#check2"></use>
+                </svg>
+            </button>
+        </li>
+        <li>
+            <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="dark"
+                    aria-pressed="false">
+                <svg class="bi me-2 opacity-50" width="1em" height="1em">
+                    <use href="#moon-stars-fill"></use>
+                </svg>
+                Dark
+                <svg class="bi ms-auto d-none" width="1em" height="1em">
+                    <use href="#check2"></use>
+                </svg>
+            </button>
+        </li>
+        <li>
+            <button type="button" class="dropdown-item d-flex align-items-center active" data-bs-theme-value="auto"
+                    aria-pressed="true">
+                <svg class="bi me-2 opacity-50" width="1em" height="1em">
+                    <use href="#circle-half"></use>
+                </svg>
+                Auto
+                <svg class="bi ms-auto d-none" width="1em" height="1em">
+                    <use href="#check2"></use>
+                </svg>
+            </button>
+        </li>
+    </ul>
+</div>
+
+
+<nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark" aria-label="Main navigation">
+    <div class="container-fluid">
+        <div class="d-flex justify-content-center" style="margin-right: 3.2rem; margin-left: 1rem;">
+            <img src="{{ url_for('static', path='/assets/svg/download-logo.svg') }}" width="55" height="30" alt="Logo"
+                 class="logo-img">
+        </div>
+        <button class="navbar-toggler p-0 border-0" type="button" id="navbarSideCollapse"
+                aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="navbar-collapse offcanvas-collapse ml-5" id="navbarsExampleDefault">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="active link-underline-dark {% if tag_name %} inactive-a {% endif %}"
+                       style="display: flex !important; margin: 0.5rem !important;"
+                       aria-current="page" href="/workspace">All files</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="">Image</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="">Audio</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="">Video</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="">Others</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" id="logout-link" class="link-underline-dark inactive-a"
+                       style="display: flex; margin: 0.5rem;" aria-current="page">Log out</a>
+
+                </li>
+            </ul>
+            <style>
+                .inactive-a {
+                    color: #9b9d9e !important;
+                }
+
+                .inactive-a:hover {
+                    color: #c7c8c9 !important;
+                }
+            </style>
+            <div class="xp-searchbar">
+                <form method="get" action="/workspace" class="d-flex">
+                    <div class="input-group">
+                        <input type="search" name="query" value="{{ query }}" class="form-control me-2"
+                               placeholder="Search">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-success" type="submit">Go</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<div class="nav-scroller bg-body shadow-sm">
+    <nav class="nav" aria-label="Secondary navigation">
+        <span class="tag-text" aria-current="page" href="#" style="margin-top: -0.2rem">Popular tags:</span>
+        {% for tag in tags[:13] %}
+        <a class="nav-link nav-link {% if tag['title'] in tag_name %} link-primary {% endif %}" href="#">
+            {{ tag['title'] }}
+            <span class="badge text-bg-light rounded-pill align-text-bottom">{{ tag['count_files'] }}</span>
+        </a>
+        {% endfor %}
+
+    </nav>
+</div>
+
+
+<main class="container">
+
+    <div class="my-3 p-3 bg-body rounded shadow-sm">
+        <h6 class="border-bottom pb-2 mb-0">Available files{% if tag_name %} sorted by {{ tag_name}}{% endif %}:</h6>
+        <div id="file-list">
+            {% for file in files_info %}
+            <div class="d-flex text-body-secondary pt-3">
+                <img src="{% if file[7] == 'image' %} {{ url_for('static', path='assets/svg/image.svg') }}
+                {% elif file[7] == 'video' %} {{ url_for('static', path='assets/svg/video.svg') }}
+                {% elif file[7] == 'audio' %} {{ url_for('static', path='assets/svg/audio.svg') }}
+                {% else %} {{ url_for('static', path='assets/svg/other.svg') }}
+                {% endif %}" class="file-icon">
+                <div class="pb-3 mb-0 small lh-sm border-bottom w-100">
+                    <div class="d-flex justify-content-between">
+                        <strong class="text-gray-dark">{{ file[1] }}</strong>
+                        <img src="{{ url_for('static', path='/assets/svg/download-btn.svg') }}"
+                             class="file-icon download-main-btn" data-file-id="{{ file[0] }}">
+                    </div>
+                    <span class="d-block">
+                    {% for item in file[5].split(',') %}
+                        <span href="/workspace/tag?tags=Audio" class="item-tag">#{{ item.strip() }}</span>
+                    {% endfor %}
+                </span>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% if total_pages > 1 %}
+        <nav class="paginator mt-4">
+            <ul class="pagination">
+                <li class="page-item {% if current_page == 1 %}disabled{% endif %}">
+                    <a class="page-link" href="?page=1">First</a>
+                </li>
+
+                {% if total_pages <= 5 %}
+                {% for i in range(1, total_pages + 1) %}
+                <li class="page-item {% if i == current_page %}active{% endif %}">
+                    <a class="page-link" href="?page={{ i }}">{{ i }}</a>
+                </li>
+                {% endfor %}
+                {% endif %}
+
+                {% if current_page == 1 and total_pages > 5 %}
+                {% for i in range(1, current_page + 3) %}
+                <li class="page-item {% if i == current_page %}active{% endif %}">
+                    <a class="page-link" href="?page={{ i }}">{{ i }}</a>
+                </li>
+                {% endfor %}
+                <li class="page-item disabled-paginator-btn">
+                    <a class="page-link disabled" style="background-color: #ffffff">...</a>
+                </li>
+                {% endif %}
+
+                {% if current_page > 1 and current_page < total_pages and total_pages > 5 %}
+                {% if current_page > 2 %}
+                <li class="page-item disabled-paginator-btn">
+                    <a class="page-link disabled" style="background-color: #ffffff">...</a>
+                </li>
+                {% endif %}
+                {% for i in range(current_page - 1, current_page + 2) %}
+                <li class="page-item {% if i == current_page %}active{% endif %}">
+                    <a class="page-link" href="?page={{ i }}">{{ i }}</a>
+                </li>
+                {% endfor %}
+                {% if current_page < total_pages - 1 %}
+                <li class="page-item disabled-paginator-btn">
+                    <a class="page-link disabled" style="background-color: #ffffff">...</a>
+                </li>
+                {% endif %}
+                {% endif %}
+
+                {% if current_page == total_pages and total_pages > 5 %}
+                <li class="page-item disabled-paginator-btn">
+                    <a class="page-link disabled" style="background-color: #ffffff">...</a>
+                </li>
+                {% for i in range(total_pages - 2, total_pages + 1) %}
+                <li class="page-item {% if i == current_page %}active{% endif %}">
+                    <a class="page-link" href="?page={{ i }}">{{ i }}</a>
+                </li>
+                {% endfor %}
+                {% endif %}
+
+                <li class="page-item {% if current_page == total_pages %}disabled{% endif %}">
+                    <a class="page-link" href="?page={{ total_pages }}">Last</a>
+                </li>
+            </ul>
+        </nav>
+        {% endif %}
+
+    </div>
+</main>
+
+<script src="{{ url_for('static', path='/assets/dist/js/bootstrap.bundle.min.js') }}"></script>
+<script src="{{ url_for('static', path='/js/python-js/workspace/download55.js') }}"></script>
+<script src="{{ url_for('static', path='/js/python-js/workspace/filter-by-tag12.js') }}"></script>
+<script src="{{ url_for('static', path='/js/python-js/auth/log-out.js') }}"></script>
+</body>
+
+</html>

@@ -1,0 +1,4 @@
+aiohttp~=3.10.10
+redis~=5.1.1
+discord.py
+fake-useragent

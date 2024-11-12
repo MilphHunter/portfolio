@@ -1,0 +1,19 @@
+.sidebar .logo-img {
+    margin-right: 1.5rem;
+}
+
+.page-item {
+    border-radius: 20px;
+}
+
+.download-history {
+    cursor: pointer;
+}
+
+.download-statistic {
+    max-width: 900px !important;
+}
+
+table.table .custom-table th:last-child {
+    width: 150px;
+}

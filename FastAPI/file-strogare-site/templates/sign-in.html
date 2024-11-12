@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en" data-bs-theme="auto">
+
+<head>
+    <script src="{{ url_for('static', path='/js/color-modes.js') }}"></script>
+
+    <meta charset="utf-8">
+    <title>Sign-In</title>
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/sign-in/">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3">
+    <link href="{{ url_for('static', path='/assets/dist/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', path='/css/sign.css') }}" rel="stylesheet">
+</head>
+
+<body class="d-flex align-items-center py-4 bg-body-tertiary">
+<svg class="icon" style="display: none;">
+    <use xlink:href="{{ url_for('static', path='/assets/svg/theme.svg#check2') }}" id="check2"></use>
+    <use xlink:href="{{ url_for('static', path='/assets/svg/theme.svg#circle-half') }}" id="circle-half"></use>
+    <use xlink:href="{{ url_for('static', path='/assets/svg/theme.svg#moon-stars-fill') }}" id="moon-stars-fill"></use>
+    <use xlink:href="{{ url_for('static', path='/assets/svg/theme.svg#sun-fill') }}" id="sun-fill"></use>
+</svg>
+
+
+<div class="dropdown position-fixed bottom-0 end-0 mb-3 me-3 bd-mode-toggle">
+    <button class="btn btn-bd-primary py-2 dropdown-toggle d-flex align-items-center" id="bd-theme" type="button"
+            aria-expanded="false" data-bs-toggle="dropdown" aria-label="Toggle theme (auto)">
+        <svg class="bi my-1 theme-icon-active" width="1em" height="1em">
+            <use href="#circle-half"></use>
+        </svg>
+        <span class="visually-hidden" id="bd-theme-text">Toggle theme</span>
+    </button>
+    <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="bd-theme-text">
+        <li>
+            <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="light"
+                    aria-pressed="false">
+                <svg class="bi me-2 opacity-50" width="1em" height="1em">
+                    <use href="#sun-fill"></use>
+                </svg>
+                Light
+                <svg class="bi ms-auto d-none" width="1em" height="1em">
+                    <use href="#check2"></use>
+                </svg>
+            </button>
+        </li>
+        <li>
+            <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="dark"
+                    aria-pressed="false">
+                <svg class="bi me-2 opacity-50" width="1em" height="1em">
+                    <use href="#moon-stars-fill"></use>
+                </svg>
+                Dark
+                <svg class="bi ms-auto d-none" width="1em" height="1em">
+                    <use href="#check2"></use>
+                </svg>
+            </button>
+        </li>
+        <li>
+            <button type="button" class="dropdown-item d-flex align-items-center active" data-bs-theme-value="auto"
+                    aria-pressed="true">
+                <svg class="bi me-2 opacity-50" width="1em" height="1em">
+                    <use href="#circle-half"></use>
+                </svg>
+                Auto
+                <svg class="bi ms-auto d-none" width="1em" height="1em">
+                    <use href="#check2"></use>
+                </svg>
+            </button>
+        </li>
+    </ul>
+</div>
+
+
+<main class="form-signin w-100 m-auto">
+    <form id="loginForm" action="/auth/login" method="POST">
+        <div class="d-flex justify-content-center mb-4">
+            <img src="{{ url_for('static', path='/assets/svg/download-logo.svg') }}" width="144" height="57" alt="Logo"
+                 class="logo-img">
+        </div>
+
+        <div class="form-floating">
+            <input type="email" name="email" class="form-control" id="floatingInput" placeholder="name@example.com"
+                   style="border-top-left-radius: 10px; border-top-right-radius: 10px;">
+            <label for="floatingInput">Email address</label>
+        </div>
+        <div class="form-floating">
+            <input type="password" name="password" class="form-control" id="floatingPassword" placeholder="Password">
+            <label for="floatingPassword">Password</label>
+        </div>
+
+        <div class="form-floating auth">
+            <button type="button" class="btn auth-btn left-btn" onmouseenter="changeIconColor(this, 'red')"
+                    onmouseleave="resetIconColor(this)">
+                <img src="{{ url_for('static', path='/assets/svg/google-logo.svg') }}" class="auth-icon" alt="Google">
+            </button>
+            <button type="button" class="btn auth-btn" onmouseenter="changeIconColor(this, 'red')"
+                    onmouseleave="resetIconColor(this)">
+                <img src="{{ url_for('static', path='/assets/svg/facebook-logo.svg') }}" class="auth-icon"
+                     alt="Facebook">
+            </button>
+            <button type="button" class="btn auth-btn right-btn" onmouseenter="changeIconColor(this, 'red')"
+                    onmouseleave="resetIconColor(this)">
+                <img src="{{ url_for('static', path='/assets/svg/github-logo.svg') }}" class="auth-icon" alt="GitHub">
+            </button>
+        </div>
+        <div class="text-center mt-3">
+            <span class="error-msg" style="display: none;"></span>
+        </div>
+        <div class="form-check text-start my-3">
+            <input class="form-check-input" type="checkbox" value="remember-me" id="flexCheckDefault">
+            <label class="form-check-label" for="flexCheckDefault">
+                Remember me
+            </label>
+        </div>
+        <button class="btn btn-primary w-100 py-2" type="submit">Sign in</button>
+        <div class="text-center">
+            <a href="/auth/sign-up" class="btn btn-link">Don't have an account? Sign up</a>
+        </div>
+        <p class="mt-5 mb-3 text-body-secondary">&copy; by Dima Komarov</p>
+    </form>
+</main>
+<script src="{{ url_for('static', path='/assets/dist/js/bootstrap.bundle.min.js') }}"></script>
+<script src="{{ url_for('static', path='/js/python-js/auth/authentication12.js') }}"></script>
+</body>
+</html>

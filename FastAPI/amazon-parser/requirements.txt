@@ -1,0 +1,9 @@
+fastapi~=0.103.2
+starlette~=0.27.0
+APScheduler~=3.11.0
+bs4~=0.0.2
+beautifulsoup4~=4.13.5
+playwright~=1.55.0
+jinja2
+uvicorn[standard]
+tzdata

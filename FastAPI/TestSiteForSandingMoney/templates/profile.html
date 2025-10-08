@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Профиль пользователя</title>
+    <style>
+        :root {
+            --bg: #0f1226;
+            --card: rgba(255, 255, 255, 0.08);
+            --card-border: rgba(255, 255, 255, 0.12);
+            --text: #e9ecf1;
+            --muted: #a9b0bd;
+            --accent: #7aa2ff;
+            --accent-2: #8ef6d2;
+            --error: #ff7a7a;
+            --ok: #8ef6d2;
+            --radius: 18px;
+            --shadow: 0 10px 30px rgba(0, 0, 0, .35), inset 0 1px 0 rgba(255, 255, 255, .05);
+        }
+
+        @media (prefers-color-scheme: light) {
+            :root {
+                --bg: #eef2f9;
+                --card: rgba(255, 255, 255, 0.9);
+                --card-border: rgba(8, 15, 37, 0.06);
+                --text: #0b1324;
+                --muted: #5a6270;
+                --accent: #3a73ff;
+                --accent-2: #0fb98b;
+                --error: #d93636;
+                --ok: #1dbf8a;
+            }
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html, body {
+            height: 100%;
+        }
+
+        body {
+            margin: 0;
+            font: 500 16px/1.45 system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+            color: var(--text);
+            background: radial-gradient(60vmax 60vmax at 10% 10%, rgba(122, 162, 255, .25), transparent 60%),
+            radial-gradient(60vmax 60vmax at 90% 10%, rgba(142, 246, 210, .25), transparent 60%),
+            linear-gradient(180deg, var(--bg), color-mix(in lab, var(--bg) 80%, #000 20%));
+            display: grid;
+            place-items: center;
+            padding: 24px;
+        }
+
+        .card {
+            width: min(560px, 100%);
+            background: var(--card);
+            border: 1px solid var(--card-border);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(10px) saturate(120%);
+            -webkit-backdrop-filter: blur(10px) saturate(120%);
+            overflow: clip;
+        }
+
+        .card-header {
+            padding: 28px 28px 0;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .brand svg {
+            width: 28px;
+            height: 28px;
+            flex: none;
+        }
+
+        .brand h1 {
+            font-size: 22px;
+            margin: 0;
+            letter-spacing: .2px;
+        }
+
+        .subtitle {
+            margin: 6px 0 0;
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        .box {
+            padding: 20px 28px;
+            display: grid;
+            gap: 16px;
+        }
+
+        .profile {
+            display: grid;
+            grid-template-columns: 72px 1fr;
+            gap: 16px;
+            align-items: center;
+            padding: 2px 0 6px;
+        }
+
+        .avatar {
+            width: 72px;
+            height: 72px;
+            border-radius: 16px;
+            display: grid;
+            place-items: center;
+            font-weight: 800;
+            font-size: 22px;
+            color: var(--text);
+            background: linear-gradient(135deg, color-mix(in lab, var(--accent) 55%, #000 45%), color-mix(in lab, var(--accent-2) 55%, #000 45%));
+            border: 1px solid var(--card-border);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, .08);
+        }
+
+        .who {
+            display: grid;
+            gap: 4px;
+        }
+
+        .name {
+            font-size: 20px;
+            font-weight: 800;
+            letter-spacing: .2px;
+        }
+
+        .meta {
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        .divider {
+            height: 1px;
+            background: var(--card-border);
+            margin: 2px 0;
+        }
+
+        .balance {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .balance-amount {
+            font-size: 34px;
+            font-weight: 800;
+            letter-spacing: .4px;
+            font-variant-numeric: tabular-nums;
+            background: linear-gradient(180deg, #fff, color-mix(in lab, #fff 60%, var(--text) 40%));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .balance-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 10px;
+            border-radius: 999px;
+            border: 1px solid var(--card-border);
+            color: var(--muted);
+            font-size: 12px;
+            background: color-mix(in lab, var(--card) 70%, #fff 30%);
+        }
+
+        .actions {
+            display: grid;
+            gap: 12px;
+            margin-top: 4px;
+        }
+
+        .row {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .row > * {
+            flex: 1;
+            min-width: 180px;
+        }
+
+        button {
+            appearance: none;
+            border: 0;
+            cursor: pointer;
+            border-radius: 12px;
+            padding: 12px 16px;
+            background: linear-gradient(180deg, var(--accent), color-mix(in lab, var(--accent) 65%, #000 35%));
+            color: white;
+            font-weight: 800;
+            letter-spacing: .2px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, .25);
+            transition: transform .08s ease, box-shadow .2s ease, filter .2s ease;
+        }
+
+        button:hover {
+            filter: brightness(1.05);
+        }
+
+        .btn {
+            appearance: none;
+            border: 0;
+            cursor: pointer;
+            border-radius: 12px;
+            padding: 12px 16px;
+            color: white;
+            font-weight: 800;
+            letter-spacing: .2px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, .25);
+            transition: transform .08s ease, box-shadow .2s ease, filter .2s ease;
+            display: inline-block;
+            text-align: center;
+        }
+
+        #enable-2fa:checked + .btn-ghost {
+            background: linear-gradient(180deg, green, color-mix(in lab, green 65%, #000 35%));
+            color: white;
+        }
+
+        .btn-ghost {
+            background: linear-gradient(180deg, #ff7a7a, color-mix(in lab, #ff7a7a 65%, #000 35%));
+            color: white;
+            border: 1px solid var(--card-border);
+            box-shadow: none;
+            font-weight: 700;
+        }
+
+        .btn-danger {
+            background: linear-gradient(180deg, var(--error), color-mix(in lab, var(--error) 65%, #000 35%));
+        }
+
+        .fineprint {
+            text-align: center;
+            color: var(--muted);
+            font-size: 12px;
+        }
+
+        .modal-backdrop {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, .55);
+            backdrop-filter: blur(50px);
+            -webkit-backdrop-filter: blur(50px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            z-index: 1000;
+        }
+
+        .modal-backdrop[aria-hidden="false"] {
+            display: flex;
+        }
+
+        .modal {
+            width: min(520px, 100%);
+            background: var(--card);
+            border: 1px solid var(--card-border);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 20px 20px 18px;
+        }
+
+        .modal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 4px 6px 8px 6px;
+        }
+
+        .modal-title {
+            font-size: 18px;
+            font-weight: 800;
+            letter-spacing: .2px;
+        }
+
+        .modal-close {
+            background: transparent;
+            color: var(--muted);
+            box-shadow: none;
+            border: 1px solid var(--card-border);
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            padding: 0;
+            display: grid;
+            place-items: center;
+        }
+
+        .modal-body {
+            display: grid;
+            gap: 14px;
+            padding: 6px;
+        }
+
+        .field {
+            display: grid;
+            gap: 6px;
+        }
+
+        .label {
+            font-size: 14px;
+            color: var(--muted);
+        }
+
+        .input {
+            width: 100%;
+            padding: 12px 12px;
+            border-radius: 12px;
+            border: 1px solid var(--card-border);
+            color: var(--text);
+            background: color-mix(in lab, var(--card) 80%, #000 20%);
+            outline: none;
+            transition: border-color .15s ease, box-shadow .15s ease;
+            font: inherit;
+        }
+
+        .input:focus {
+            border-color: color-mix(in lab, var(--accent) 70%, #fff 30%);
+            box-shadow: 0 0 0 3px color-mix(in lab, var(--accent) 25%, transparent 75%);
+        }
+
+        .modal-footer {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+            padding: 6px;
+        }
+
+        .msg {
+            font-size: 13px;
+            color: var(--muted);
+            padding: 6px 8px;
+            border-radius: 10px;
+            border: 1px dashed var(--card-border);
+            background: color-mix(in lab, var(--card) 70%, #000 30%);
+        }
+
+        .msg.error {
+            color: var(--error);
+            border-color: color-mix(in lab, var(--error) 60%, var(--card-border) 40%);
+        }
+
+        .msg.ok {
+            color: var(--ok);
+            border-color: color-mix(in lab, var(--ok) 60%, var(--card-border) 40%);
+        }
+
+        @media (max-width: 480px) {
+            .brand h1 {
+                font-size: 20px;
+            }
+
+            .profile {
+                grid-template-columns: 56px 1fr;
+            }
+
+            .avatar {
+                width: 56px;
+                height: 56px;
+                border-radius: 14px;
+                font-size: 18px;
+            }
+
+            .balance-amount {
+                font-size: 28px;
+            }
+        }
+    </style>
+</head>
+<body>
+<main class="card" role="region" aria-labelledby="profile-title">
+    <header class="card-header">
+        <div class="brand" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                 stroke-linejoin="round" aria-hidden="true">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                <circle cx="12" cy="7" r="4"/>
+            </svg>
+            <h1 id="profile-title">Профиль</h1>
+        </div>
+        <p class="subtitle">Информация об аккаунте и действия</p>
+    </header>
+
+    <section class="box">
+        <div class="profile">
+            <div class="avatar" aria-hidden="true">{{ first_name[0] }}{{ last_name[0] }}</div>
+            <div class="who">
+                <div class="name" id="user-fullname">{{ first_name }} {{ last_name }}</div>
+                <div class="meta">ID: {{ user_id }} • Статус: Пользователь</div>
+            </div>
+        </div>
+
+        <div class="divider" role="separator" aria-hidden="true"></div>
+
+        <div class="balance" aria-live="polite">
+            <div class="balance-amount" aria-label="Баланс пользователя">₴ {{ balance }}</div>
+            <span class="balance-pill">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><circle
+                  cx="12" cy="12" r="9"/><path d="M12 6v12M6 12h12"/></svg>
+          Баланс обновлён 1 мин назад
+        </span>
+        </div>
+
+        <div class="actions">
+            <div class="row">
+                <button type="button" id="send-funds">
+                    Отправить средства другому пользователю
+                </button>
+                <input type="checkbox" id="enable-2fa" hidden {% if two_factor_enabled %}checked{% endif %}>
+                <label for="enable-2fa" class="btn btn-ghost">
+                    {% if two_factor_enabled %}Выключить 2FA{% else %}Включить 2FA{% endif %}
+                </label>
+                <script>
+                    (function () {
+                        const cb = document.getElementById("enable-2fa");
+                        const lbl = document.querySelector('label[for="enable-2fa"]');
+
+                        function setLabelText(on) {
+                            lbl.textContent = on ? "Выключить 2FA" : "Включить 2FA";
+                        }
+
+                        setLabelText(cb.checked);
+
+                        cb.addEventListener("change", async function () {
+                            const desired = this.checked;
+                            const previous = !desired;
+                            cb.disabled = true;
+
+                            try {
+                                const res = await fetch("/toggle-2fa", {
+                                    method: "POST",
+                                    headers: {"Content-Type": "application/json"},
+                                    body: JSON.stringify({enabled: desired})
+                                });
+                                const data = await res.json();
+
+                                if (res.ok && data.ok) {
+                                    const confirmed = (typeof data.enabled === "boolean") ? data.enabled : desired;
+                                    setLabelText(confirmed);
+                                } else {
+                                    alert(data.message || "Ошибка при обновлении 2FA");
+                                    this.checked = previous;
+                                    setLabelText(previous);
+                                }
+                            } catch (e) {
+                                alert("Ошибка сети");
+                                this.checked = previous;
+                                setLabelText(previous);
+                            } finally {
+                                cb.disabled = false;
+                            }
+                        });
+                    })();
+                </script>
+            </div>
+
+            <form action="/logout" style="display: flex; align-items: stretch; flex-direction: column-reverse"
+                  method="post" novalidate>
+                <button type="submit" class="btn-danger">Выйти с профиля</button>
+            </form>
+
+            <p class="fineprint">Берегите свои данные. Не передавайте код 2FA и пароль третьим лицам.</p>
+        </div>
+    </section>
+</main>
+
+<!-- ===== МОДАЛЬНОЕ ОКНО: Отправка средств ===== -->
+<div class="modal-backdrop" id="modal-backdrop" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" aria-describedby="modal-desc">
+        <div class="modal-header">
+            <div>
+                <div class="modal-title" id="modal-title">Отправить средства</div>
+                <div class="msg" id="modal-desc">Укажите сумму и e-mail получателя. Комиссия отсутствует.</div>
+            </div>
+            <button class="modal-close" id="modal-close" aria-label="Закрыть окно">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M18 6L6 18M6 6l12 12"/>
+                </svg>
+            </button>
+        </div>
+
+        <form class="modal-body" id="transfer-form" action="/send_money-form" method="post" novalidate>
+            <div class="field">
+                <label for="amount" class="label">Сумма, ₴</label>
+                <input class="input" id="amount" name="amount" type="number" inputmode="decimal" min="0.01" step="0.01"
+                       placeholder="Например, 250.00" required/>
+            </div>
+
+            <div class="field">
+                <label for="email" class="label">E-mail получателя</label>
+                <input class="input" id="email" name="email" type="email" placeholder="name@example.com"
+                       autocomplete="email" required/>
+            </div>
+
+            <div class="field" id="form-message" hidden></div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn-ghost" id="modal-cancel">Отмена</button>
+                <button type="submit" id="confirm-transfer">Подтвердить</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    (function () {
+        const openBtn = document.getElementById('send-funds');
+        const backdrop = document.getElementById('modal-backdrop');
+        const modal = backdrop.querySelector('.modal');
+        const closeBtn = document.getElementById('modal-close');
+        const cancelBtn = document.getElementById('modal-cancel');
+        const form = document.getElementById('transfer-form');
+        const amount = document.getElementById('amount');
+        const email = document.getElementById('email');
+        const message = document.getElementById('form-message');
+
+        let lastFocused = null;
+
+        function openModal() {
+            lastFocused = document.activeElement;
+            backdrop.setAttribute('aria-hidden', 'false');
+            document.body.style.overflow = 'hidden';
+            setTimeout(() => amount.focus(), 10);
+            document.addEventListener('keydown', trapFocus);
+            document.addEventListener('keydown', onEsc);
+        }
+
+        function closeModal() {
+            backdrop.setAttribute('aria-hidden', 'true');
+            document.body.style.overflow = '';
+            message.hidden = true;
+            message.className = 'field';
+            message.textContent = '';
+            form.reset();
+            document.removeEventListener('keydown', trapFocus);
+            document.removeEventListener('keydown', onEsc);
+            if (lastFocused) lastFocused.focus();
+        }
+
+        function onEsc(e) {
+            if (e.key === 'Escape') closeModal();
+        }
+
+        backdrop.addEventListener('click', (e) => {
+            if (e.target === backdrop) closeModal();
+        });
+
+        function trapFocus(e) {
+            if (e.key !== 'Tab') return;
+            const focusables = modal.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+            if (!focusables.length) return;
+            const first = focusables[0];
+            const last = focusables[focusables.length - 1];
+            if (e.shiftKey && document.activeElement === first) {
+                last.focus();
+                e.preventDefault();
+            } else if (!e.shiftKey && document.activeElement === last) {
+                first.focus();
+                e.preventDefault();
+            }
+        }
+
+        function showMsg(text, type) {
+            message.hidden = false;
+            message.className = 'msg ' + (type || '');
+            message.textContent = text;
+        }
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const value = parseFloat(amount.value.replace(',', '.'));
+            const mail = email.value.trim();
+
+            if (isNaN(value) || value < 0.01) {
+                showMsg('Укажите корректную сумму (не меньше 0.01 ₴).', 'error');
+                amount.focus();
+                return;
+            }
+            if (!mail || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(mail)) {
+                showMsg('Введите корректный e-mail получателя.', 'error');
+                email.focus();
+                return;
+            }
+
+            showMsg('Заявка на перевод создана. Подтвердите в приложении/по почте.', 'ok');
+
+            setTimeout(closeModal, 1000);
+        });
+
+        openBtn.addEventListener('click', openModal);
+        closeBtn.addEventListener('click', closeModal);
+        cancelBtn.addEventListener('click', closeModal);
+    })();
+</script>
+<script>
+    (function () {
+        const form = document.getElementById('transfer-form');
+        const message = document.getElementById('form-message');
+
+        function showFormMsg(text, type) {
+            message.hidden = false;
+            message.className = 'msg ' + (type || '');
+            message.textContent = text;
+        }
+
+        function updateBalance(newValue) {
+            const el = document.querySelector('.balance-amount');
+            if (!el) return;
+            el.textContent = '₴ ' + newValue;
+        }
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const fd = new FormData(form);
+            try {
+                const res = await fetch(form.action || '/send_money-form', {
+                    method: form.method || 'POST',
+                    body: fd,
+                    headers: {'X-Requested-With': 'fetch'}
+                });
+
+                const data = await res.json();
+                if (!res.ok) {
+                    showFormMsg('Ошибка сервера. Попробуйте позже.', 'error');
+                    return;
+                }
+
+                if (data.ok) {
+                    showFormMsg(data.message || 'Перевод выполнен.', 'ok');
+                    if (data.new_balance) updateBalance(data.new_balance);
+
+                    setTimeout(() => {
+                        const backdrop = document.getElementById('modal-backdrop');
+                        if (backdrop) {
+                            backdrop.setAttribute('aria-hidden', 'true');
+                            document.body.style.overflow = '';
+                        }
+                        form.reset();
+                        message.hidden = true;
+                    }, 900);
+                } else {
+                    showFormMsg(data.message || 'Не удалось выполнить перевод.', 'error');
+                }
+            } catch (err) {
+                showFormMsg('Сеть недоступна или сервер не отвечает.', 'error');
+            }
+        });
+    })();
+</script>
+</body>
+</html>

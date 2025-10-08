@@ -1,0 +1,16 @@
+services:
+  db:
+    image: postgres:17.5-alpine
+    container_name: tickpickcom_project_db
+    ports:
+      - '5445:5432'
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: tickpickcom_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 12345678
+    restart: always
+
+volumes:
+  postgres_data:

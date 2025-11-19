@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Вход в аккаунт</title>
+  <style>
+    :root{
+      --bg: #0f1226;
+      --card: rgba(255,255,255,0.08);
+      --card-border: rgba(255,255,255,0.12);
+      --text: #e9ecf1;
+      --muted: #a9b0bd;
+      --accent: #7aa2ff;
+      --accent-2: #8ef6d2;
+      --error: #ff7a7a;
+      --ok: #8ef6d2;
+      --radius: 18px;
+      --shadow: 0 10px 30px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.05);
+    }
+
+    @media (prefers-color-scheme: light){
+      :root{
+        --bg: #eef2f9;
+        --card: rgba(255,255,255,0.9);
+        --card-border: rgba(8,15,37,0.06);
+        --text: #0b1324;
+        --muted: #5a6270;
+        --accent: #3a73ff;
+        --accent-2: #0fb98b;
+        --error: #d93636;
+        --ok: #1dbf8a;
+      }
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body{
+      margin:0;
+      font: 500 16px/1.4 system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+      color: var(--text);
+      background:
+        radial-gradient(60vmax 60vmax at 10% 10%, rgba(122,162,255,.25), transparent 60%),
+        radial-gradient(60vmax 60vmax at 90% 10%, rgba(142,246,210,.25), transparent 60%),
+        linear-gradient(180deg, var(--bg), color-mix(in lab, var(--bg) 80%, #000 20%));
+      display:grid; place-items:center;
+      padding: 24px;
+    }
+
+    .card{
+      width: min(460px, 100%);
+      background: var(--card);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px) saturate(120%);
+      -webkit-backdrop-filter: blur(10px) saturate(120%);
+      overflow: clip;
+    }
+
+    .card-header{ padding: 28px 28px 0; }
+
+    .brand{ display:flex; align-items:center; gap:12px; }
+    .brand svg{ width: 28px; height: 28px; flex: none; }
+    .brand h1{ font-size: 22px; margin:0; letter-spacing:.2px; }
+    .subtitle{ margin:6px 0 0; color: var(--muted); font-size: 14px; }
+
+    form{ padding: 24px 28px 28px; display:grid; gap:16px; }
+
+    .field{ display:grid; gap:8px; }
+    label{ font-size: 14px; color: var(--muted); }
+
+    .input{
+      display:flex; align-items:center; gap:10px;
+      border: 1px solid var(--card-border);
+      background: color-mix(in lab, var(--card) 70%, #fff 30%);
+      padding: 12px 14px; border-radius: 12px;
+      transition: border-color .2s ease, box-shadow .2s ease;
+    }
+    .input:focus-within{
+      border-color: color-mix(in lab, var(--accent) 60%, #fff 40%);
+      box-shadow: 0 0 0 4px color-mix(in lab, var(--accent) 30%, transparent 70%);
+    }
+    .input input{
+      width:100%; outline: none; border:0; background:transparent; color:var(--text);
+      font: inherit;
+    }
+
+    .input svg{ width:18px; height:18px; opacity:.7; flex:none; }
+
+    .hint{ font-size:12px; color: var(--muted); }
+    .error{ color: var(--error); font-size: 13px; margin: 8px 2px 0; display:none; }
+    .error.show{ display:block; }
+
+    .alert{
+      margin: 0 0 10px; padding: 10px 12px;
+      border:1px dashed color-mix(in lab, var(--error) 60%, var(--card-border) 40%);
+      background: color-mix(in lab, var(--card) 75%, #000 25%);
+      color: var(--error); border-radius: 12px; font-size: 14px;
+    }
+
+    .field:has(input:invalid:not(:placeholder-shown)) .error{ opacity:1; height:auto; transform:none; }
+
+    .row{ display:flex; align-items:center; justify-content:space-between; gap:12px; }
+    .checkbox{ display:flex; align-items:center; gap:8px; color: var(--muted); font-size:14px; }
+    .checkbox input{ accent-color: var(--accent); }
+
+    .actions{ display:grid; gap:10px; margin-top: 6px; }
+    button{
+      appearance:none; border:0; cursor:pointer; border-radius:12px; padding:12px 16px;
+      background: linear-gradient(180deg, var(--accent), color-mix(in lab, var(--accent) 65%, #000 35%));
+      color: white; font-weight: 700; letter-spacing:.2px; box-shadow: 0 10px 20px rgba(0,0,0,.25);
+      transition: transform .08s ease, box-shadow .2s ease, filter .2s ease;
+    }
+    button:hover{ filter: brightness(1.05); }
+    button:active{ transform: translateY(1px); box-shadow: 0 6px 14px rgba(0,0,0,.28); }
+
+    .btn-ghost{
+      background: transparent; color: var(--muted); border:1px solid var(--card-border);
+      box-shadow:none; font-weight:600;
+    }
+
+    .fineprint{ text-align:center; color: var(--muted); font-size:12px; }
+
+    form:has(input:invalid:not(:placeholder-shown)) .submit{
+      filter: grayscale(1); opacity:.6; pointer-events:none;
+    }
+
+    @media (max-width: 420px){
+      .brand h1{ font-size: 20px; }
+      .row{ flex-direction: column; align-items: stretch; }
+    }
+  </style>
+</head>
+<body>
+  <main class="card" role="region" aria-labelledby="login-title">
+    <header class="card-header">
+      <div class="brand" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="3" y="11" width="18" height="11" rx="2"/>
+          <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+        </svg>
+        <h1 id="login-title">Войти в аккаунт</h1>
+        {% if error_general %}
+      <div class="alert">{{ error_general }}</div>
+    {% endif %}
+      </div>
+      <p class="subtitle">Введите email и пароль, чтобы продолжить</p>
+    </header>
+
+    <form action="/login-form" method="post" novalidate>
+      <div class="field">
+        <label for="email">Email</label>
+        <div class="input">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 4h16v16H4z"/><path d="m22 6-10 7L2 6"/></svg>
+          <input id="email" name="email" type="email" autocomplete="email" placeholder=" " required>
+        </div>
+        <p class="error {% if error_email %}show{% endif %}">{{ error_email }}</p>
+        <p class="error">Введите корректный email</p>
+      </div>
+
+      <div class="field">
+        <label for="password">Пароль</label>
+        <div class="input">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          <input id="password" name="password" type="password" autocomplete="current-password" placeholder=" " minlength="8"
+                 pattern="(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d\W]{8,}"
+                 title="Минимум 8 символов, хотя бы одна буква и цифра" required>
+        </div>
+        <div class="row">
+          <span class="hint">Минимум 8 символов, буква и цифра</span>
+          <a href="#" style="color:var(--accent); text-underline-offset:2px;">Забыли пароль?</a>
+        </div>
+        <p class="error {% if error_password %}show{% endif %}">{{ error_password }}</p>
+        <p class="error">Пароль не соответствует требованиям</p>
+      </div>
+
+      <div class="row">
+        <label class="checkbox" for="remember">
+          <input id="remember" name="remember" type="checkbox"> Запомнить меня
+        </label>
+      </div>
+
+      <div class="actions">
+        <button class="submit" type="submit">Войти</button>
+        <p class="fineprint">Нет аккаунта? <a href="/signup" style="color:var(--accent)">Зарегистрироваться</a></p>
+      </div>
+    </form>
+  </main>
+</body>
+</html>

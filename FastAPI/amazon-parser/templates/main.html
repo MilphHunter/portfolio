@@ -1,0 +1,405 @@
+<!doctype html>
+<html lang="ru">
+
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <title>Каталог</title>
+    <link rel="stylesheet" href="{{ request.app.url_path_for('static', path='css/style4.css') }}">
+    <script src="{{ request.app.url_path_for('static', path='js/script3.js') }}" defer></script>
+</head>
+
+<body>
+<div class="controls">
+    <div class="filter-block">
+        <span class="filter-label">Sort by price</span>
+        <div class="custom-select" id="sort-price-select" tabindex="0">
+            <div class="selected">No</div>
+            <div class="options">
+                <div data-value="none" id="sort-price-none">No</div>
+                <div data-value="price-asc" id="sort-price-asc">Cheaper → Expensive</div>
+                <div data-value="price-desc" id="sort-price-desc">Expensive → Cheaper</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="filter-block">
+        <span class="filter-label">Sort by rating</span>
+        <div class="custom-select" id="sort-rating-select" tabindex="0">
+            <div class="selected">No</div>
+            <div class="options">
+                <div data-value="none" id="sort-rating-none">No</div>
+                <div data-value="rating-asc" id="sort-rating-asc">Low → High</div>
+                <div data-value="rating-desc" id="sort-rating-desc">High → Low</div>
+            </div>
+        </div>
+    </div>
+    <div class="filter-block">
+        <span class="filter-label">Minimum rating</span>
+        <input type="number" id="min-rating" min="0" max="5" step="0.1" placeholder="0–5" style="
+      padding:10px 14px;
+      border-radius:14px;
+      border:1px solid #d1d5db;
+      font-size:14px;
+      width:100px;
+    ">
+    </div>
+
+    <div class="filter-block">
+        <span class="filter-label">&nbsp;</span>
+        <div class="hoverable">
+            <form id="json_download" method="get" action="/download_json">
+                <button type="submit" style="
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      padding: 10px 16px;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      font-weight: 500;
+      width: 100%;
+      transition: background 0.2s ease, transform 0.2s ease;
+    ">
+                    Download JSON file
+                </button>
+            </form>
+        </div>
+    </div>
+    <div class="last-update">
+      <span class="filter-label">
+        Last update: {{ dt }}
+      </span>
+    </div>
+</div>
+
+<div class="page-layout">
+    <aside class="sidebar">
+        <h3 class="product-title">Any Department</h3>
+        <nav class="categories">
+            <a href="" class="product-title category-link" data-category="Amazon Devices & Accessories">Amazon Devices &
+                Accessories</a>
+            <a href="" class="product-title category-link" data-category="Amazon Renewed">Amazon Renewed</a>
+            <a href="" class="product-title category-link" data-category="Appliances">Appliances</a>
+            <a href="" class="product-title category-link" data-category="Apps & Games">Apps & Games</a>
+            <a href="" class="product-title category-link" data-category="Arts, Crafts & Sewing">Arts, Crafts &
+                Sewing</a>
+            <a href="" class="product-title category-link" data-category="Audible Books & Originals">Audible Books &
+                Originals</a>
+            <a href="" class="product-title category-link" data-category="Automotive">Automotive</a>
+            <a href="" class="product-title category-link" data-category="Baby">Baby</a>
+            <a href="" class="product-title category-link" data-category="Beauty & Personal Care">Beauty & Personal
+                Care</a>
+            <a href="" class="product-title category-link" data-category="Books">Books</a>
+            <a href="" class="product-title category-link" data-category="Camera & Photo Products">Camera & Photo
+                Products</a>
+            <a href="" class="product-title category-link" data-category="CDs & Vinyl">CDs & Vinyl</a>
+            <a href="" class="product-title category-link" data-category="Cell Phones & Accessories">Cell Phones &
+                Accessories</a>
+            <a href="" class="product-title category-link" data-category="Clothing, Shoes & Jewelry">Clothing, Shoes &
+                Jewelry</a>
+            <a href="" class="product-title category-link" data-category="Collectible Coins">Collectible Coins</a>
+            <a href="" class="product-title category-link" data-category="Computers & Accessories">Computers &
+                Accessories</a>
+            <a href="" class="product-title category-link" data-category="Digital Educational Resources">Digital
+                Educational Resources</a>
+            <a href="" class="product-title category-link" data-category="Digital Music">Digital Music</a>
+            <a href="" class="product-title category-link" data-category="Electronics">Electronics</a>
+            <a href="" class="product-title category-link" data-category="Entertainment Collectibles">Entertainment
+                Collectibles</a>
+            <a href="" class="product-title category-link" data-category="Gift Cards">Gift Cards</a>
+            <a href="" class="product-title category-link" data-category="Grocery & Gourmet Food">Grocery & Gourmet
+                Food</a>
+            <a href="" class="product-title category-link" data-category="Handmade Products">Handmade Products</a>
+            <a href="" class="product-title category-link" data-category="Health & Household">Health & Household</a>
+            <a href="" class="product-title category-link" data-category="Home & Kitchen">Home & Kitchen</a>
+            <a href="" class="product-title category-link" data-category="Industrial & Scientific">Industrial &
+                Scientific</a>
+            <a href="" class="product-title category-link" data-category="Kindle Store">Kindle Store</a>
+            <a href="" class="product-title category-link" data-category="Kitchen & Dining">Kitchen & Dining</a>
+            <a href="" class="product-title category-link" data-category="Movies & TV">Movies & TV</a>
+            <a href="" class="product-title category-link" data-category="Musical Instruments">Musical Instruments</a>
+            <a href="" class="product-title category-link" data-category="Office Products">Office Products</a>
+            <a href="" class="product-title category-link" data-category="Patio, Lawn & Garden">Patio, Lawn & Garden</a>
+            <a href="" class="product-title category-link" data-category="Pet Supplies">Pet Supplies</a>
+            <a href="" class="product-title category-link" data-category="Software">Software</a>
+            <a href="" class="product-title category-link" data-category="Sports & Outdoors">Sports & Outdoors</a>
+            <a href="" class="product-title category-link" data-category="Sports Collectibles">Sports Collectibles</a>
+            <a href="" class="product-title category-link" data-category="Tools & Home Improvement">Tools & Home
+                Improvement</a>
+            <a href="" class="product-title category-link" data-category="Toys & Games">Toys & Games</a>
+            <a href="" class="product-title category-link" data-category="Unique Finds">Unique Finds</a>
+            <a href="" class="product-title category-link" data-category="Video Games">Video Games</a>
+        </nav>
+    </aside>
+
+    <script>
+        // Восстанавливает последнюю использованную категорию пользователем, а так-же открывает первую категорию при запуске сайта
+        document.addEventListener("DOMContentLoaded", () => {
+            const categoryLinks = document.querySelectorAll(".category-link");
+            const lastCategory = localStorage.getItem("lastCategory");
+            let target;
+
+            if (lastCategory) {
+                target = document.querySelector(`.category-link[data-category="${lastCategory}"]`);
+            }
+
+            if (!target) {
+                target = document.querySelector(".category-link");
+            }
+
+            if (target) {
+                target.click();
+            }
+
+            categoryLinks.forEach(link => {
+                link.addEventListener("click", (e) => {
+                    e.preventDefault();
+                    const category = link.dataset.category;
+                    localStorage.setItem("lastCategory", category);
+                });
+            });
+        });
+    </script>
+    <script>
+        // Указание на текущую, используемую категорию
+        document.querySelectorAll('.categories .product-title').forEach(item => {
+            item.addEventListener('click', function (e) {
+                e.preventDefault();
+
+                const isActive = this.classList.contains('active');
+
+                document.querySelectorAll('.categories .product-title')
+                    .forEach(link => link.classList.remove('active'));
+
+                if (!isActive) {
+                    this.classList.add('active');
+                }
+            });
+        });
+    </script>
+    <script>
+        // Состояние сортировок/фильтров
+        const sortState = {price: 'none', rating: 'none', minRating: 0};
+
+        const toNum = v => {
+            const n = parseFloat(String(v ?? '').replace(',', '.'));
+            return Number.isFinite(n) ? n : NaN;
+        };
+
+        let allCards = [];
+
+        const cmpBy = (key, dir) => (a, b) => {
+            const va = toNum(a.dataset[key]);
+            const vb = toNum(b.dataset[key]);
+            const aNaN = Number.isNaN(va);
+            const bNaN = Number.isNaN(vb);
+            if (aNaN && bNaN) return 0;
+            if (aNaN) return 1;
+            if (bNaN) return -1;
+            return dir === 'asc' ? (va - vb) : (vb - va);
+        };
+
+        const cmpIdx = (a, b) => (parseInt(a.dataset.idx || '0') - parseInt(b.dataset.idx || '0'));
+
+        function render() {
+            const list = document.getElementById('list');
+
+            // 1) фильтр по минимальному рейтингу
+            let cards = allCards.filter(c => {
+                const r = toNum(c.dataset.rating);
+                const ratingVal = Number.isNaN(r) ? 0 : r;
+                return ratingVal >= sortState.minRating;
+            });
+
+            // 2) сортировка
+            const havePrice = sortState.price !== 'none';
+            const haveRating = sortState.rating !== 'none';
+            const byPrice = havePrice ? cmpBy('price', sortState.price) : null;
+            const byRating = haveRating ? cmpBy('rating', sortState.rating) : null;
+
+            if (havePrice || haveRating) {
+                cards.sort((a, b) => {
+                    if (havePrice) {
+                        const p = byPrice(a, b);
+                        if (p !== 0) return p;
+                        if (haveRating) {
+                            const r = byRating(a, b);
+                            if (r !== 0) return r;
+                        }
+                        return cmpIdx(a, b);
+                    }
+                    if (haveRating) {
+                        const r = byRating(a, b);
+                        if (r !== 0) return r;
+                        return cmpIdx(a, b);
+                    }
+                    return 0;
+                });
+            }
+
+            // 3) перерисовка
+            const frag = document.createDocumentFragment();
+            cards.forEach(c => frag.appendChild(c));
+            list.innerHTML = '';
+            list.appendChild(frag);
+        }
+
+        // --- КНОПКИ СОРТ. ПО ЦЕНЕ ---
+        document.getElementById('sort-price-none')?.addEventListener('click', () => {
+            sortState.price = 'none';
+            render();
+        });
+        document.getElementById('sort-price-asc')?.addEventListener('click', () => {
+            sortState.price = 'asc';
+            render();
+        });
+        document.getElementById('sort-price-desc')?.addEventListener('click', () => {
+            sortState.price = 'desc';
+            render();
+        });
+
+        // --- КНОПКИ СОРТ. ПО РЕЙТИНГУ ---
+        document.getElementById('sort-rating-none')?.addEventListener('click', () => {
+            sortState.rating = 'none';
+            render();
+        });
+        document.getElementById('sort-rating-asc')?.addEventListener('click', () => {
+            sortState.rating = 'asc';
+            render();
+        });
+        document.getElementById('sort-rating-desc')?.addEventListener('click', () => {
+            sortState.rating = 'desc';
+            render();
+        });
+
+        // --- ИНПУТ МИНИМАЛЬНОГО РЕЙТИНГА ---
+        document.getElementById('min-rating')?.addEventListener('input', (e) => {
+            const val = parseFloat(String(e.target.value ?? '').replace(',', '.'));
+            sortState.minRating = Number.isFinite(val) ? Math.max(0, Math.min(5, val)) : 0; // clamp 0..5
+            render();
+        });
+
+        // --- Загрузка категории: пропускаем товары без title ---
+        document.querySelectorAll(".category-link").forEach(link => {
+            link.addEventListener("click", async (e) => {
+                e.preventDefault();
+                const category = e.target.dataset.category;
+
+                try {
+                    const res = await fetch(`/get_category/${encodeURIComponent(category)}`);
+                    if (!res.ok) throw new Error("Ошибка запроса");
+
+                    const data = await res.json();
+                    const products = data.products;
+
+                    const list = document.getElementById("list");
+                    list.innerHTML = "";
+
+                    const newCards = [];
+
+                    products.forEach((rec) => {
+                        const p = rec?.result;
+                        const title = String(p?.title ?? '').trim();
+                        if (!title) return; // <== пропускаем карточку без title
+
+                        const article = document.createElement("article");
+                        article.className = "product-card";
+
+                        // последовательная индексация только по реально добавленным карточкам
+                        const order = newCards.length;
+                        article.dataset.idx = String(order);
+
+                        article.dataset.price = p.price ?? "";
+                        article.dataset.listPrice = p.list_price ?? "";
+                        article.dataset.discount = p.discount_percent ?? "";
+                        article.dataset.rank = p.rank ?? "";
+                        article.dataset.rating = p.rating ?? "";
+                        article.dataset.reviews = p.reviews_count ?? "";
+                        article.dataset.prime = p.is_prime ? "true" : "false";
+
+                        const fullStars = Math.floor(p.rating || 0);
+                        const emptyStars = 5 - fullStars;
+
+                        article.innerHTML = `
+            <div class="product-image">
+              <img src="${p.main_image_url || ''}" alt="${title}">
+            </div>
+            <header class="product-header">
+              <h3 class="product-title"><a href="${p.dp_url || '#'}">${title}</a></h3>
+              <span class="rank-badge">#${order + 1}</span>
+            </header>
+            <div class="asin">ID: ${p.asin || ''}</div>
+            <div class="product-pricing">
+              ${p.price ? `<span class="price">${p.price}$</span>` : ""}
+              ${p.list_price ? `<span class="list-price">${p.list_price}$</span>` : ""}
+              ${Number.isFinite(p.discount_percent) ? `<span class="discount-badge">−${p.discount_percent}%</span>` : ""}
+            </div>
+            <ul class="bullets">
+              ${(p.bullet_points || []).map(b =>
+                            `<li>${String(b).length > 45 ? String(b).slice(0, 45) + "..." : String(b)}</li>`).join("")}
+            </ul>
+            <div class="bsr">
+              ${(p.best_sellers_rank || []).map(b =>
+                            `<div class="bsr-item">#${b.rank} in category ${b.category}</div>`).join("")}
+            </div>
+            <div class="meta">
+              <div class="rating">
+                ${p.rating
+                            ? `<span class="stars" aria-label="${p.rating} из 5">
+                      ${'★'.repeat(fullStars)}${'☆'.repeat(emptyStars)}
+                    </span>
+                    <span class="rating-value">${p.rating}</span>`
+                            : ""
+                        }
+                ${p.reviews_count ? `<span class="reviews">(${p.reviews_count})</span>` : ""}
+              </div>
+              ${p.is_prime ? `<span class="prime-badge">Prime</span>` : ""}
+            </div>
+          `;
+
+                        newCards.push(article);
+                    });
+
+                    // обновляем master-список и рендерим
+                    allCards = newCards;
+                    render();
+
+                } catch (err) {
+                    console.error("Ошибка загрузки категории:", err);
+                }
+            });
+        });
+
+        // --- Инициализация уже имеющихся карточек на странице: оставляем только с непустым title ---
+        window.addEventListener('DOMContentLoaded', () => {
+            const list = document.getElementById('list');
+            let init = Array.from(list.querySelectorAll('.product-card'))
+                .filter(card => {
+                    const t = card.querySelector('.product-title')?.textContent?.trim() || '';
+                    return t.length > 0; // <== только карточки с заголовком
+                });
+
+            // перенумеруем и проставим индексы последовательно
+            init.forEach((c, i) => {
+                c.dataset.idx = String(i);
+                const badge = c.querySelector('.rank-badge');
+                if (badge) badge.textContent = `#${i + 1}`;
+            });
+
+            if (init.length) {
+                allCards = init;
+                render();
+            } else {
+                allCards = [];
+                list.innerHTML = '';
+            }
+        });
+    </script>
+
+
+    <main class="content">
+        <div id="list" class="grid"></div>
+    </main>
+</div>
+</body>
+</html>
